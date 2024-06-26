@@ -19,7 +19,7 @@ const puppeteer = require('puppeteer');
         },
         {
             name: 'xs',
-            value: '38%3AWo3dORZPK5KMkw%3A2%3A1716974618%3A-1%3A11361',
+            value: '11%3AinhoChAjm4XLPA%3A2%3A1719392933%3A-1%3A11361',
             domain: '.facebook.com',
             path: '/',
             expires: new Date('2025-05-29T06:53:31.187Z').getTime() / 1000,
@@ -41,7 +41,7 @@ const puppeteer = require('puppeteer');
         },
         {
             name: 'fr',
-            value: '1NH1qvOmWkHD93yqj.AWXCazSHf2-scMGEuV0678FniU0.BmVu89..AAA.0.0.BmVvQb.AWWN1xD4904',
+            value: '1YmSZxru2wyb7mCNZ.AWUGodKebFijrAu25EovUc_QsZE.BmesVy..AAA.0.0.Bme9qs.AWVHmaoP3P0',
             domain: '.facebook.com',
             path: '/',
             expires: new Date('2024-08-27T06:53:31.187Z').getTime() / 1000,
@@ -66,7 +66,7 @@ const puppeteer = require('puppeteer');
         console.log('Logged in successfully');
 
         // ไปที่ลิงก์ของโพสต์ที่ต้องการไลค์
-        await page.goto('https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid0SNry3kALTR2aEEGZyPim71burUwc3bxmsViNPcG78AKv3mg3VMk38ZAv4S4nFpBkl', { waitUntil: 'networkidle2' });
+        await page.goto('https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid0m9A3o2mDipAtwHi6KRLWVkezSoRR46jxvoS2gZE9a6hbPrrnwHtroF3bURvv3JRvl', { waitUntil: 'networkidle2' });
 
         // เลื่อนหน้าจอลงเพื่อค้นหาปุ่มไลค์
         await page.evaluate(async () => {
@@ -88,6 +88,11 @@ const puppeteer = require('puppeteer');
 
         // รอให้การคลิกทำงานเสร็จ
         await new Promise(resolve => setTimeout(resolve, 2000));
+
+        // คลิกปุ่มไลค์
+        await likeButton.click();
+
+        console.log('Post liked successfully');
 
     } else {
         console.log('Failed to log in');
