@@ -7,7 +7,7 @@ from datetime import datetime
 import time
 
 # Path to your GeckoDriver (Linux server)
-gecko_driver_path = '/usr/local/bin/geckodriver'
+gecko_driver_path = '/path/geckodriver'
 
 # Options for Firefox
 firefox_options = Options()
