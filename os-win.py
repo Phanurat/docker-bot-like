@@ -10,6 +10,7 @@ import time
 # Options for ChromeDriver
 chrome_options = Options()
 chrome_options.add_argument("--start-maximized")
+chrome_options.add_argument("--disable-notifications")
 
 # Initialize WebDriver using WebDriverManager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
@@ -84,8 +85,36 @@ time.sleep(5)
 # ตรวจสอบสถานะการเข้าสู่ระบบ
 if "Facebook" in driver.title:
     print("เข้าสู่ระบบสำเร็จ")
-else:
-    print("การเข้าสู่ระบบล้มเหลว")
+    
+    # ไปที่ลิงก์ของโพสต์ที่ต้องการไลค์
+    post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid0m9A3o2mDipAtwHi6KRLWVkezSoRR46jxvoS2gZE9a6hbPrrnwHtroF3bURvv3JRvl'
+    driver.get(post_url)
+    
+    # รอเวลาให้หน้าเว็บโหลดเสร็จ
+    time.sleep(5)
+    
+    # เลื่อนหน้าจอลงเพื่อค้นหาปุ่มไลค์
+    for _ in range(5):  # ปรับจำนวนครั้งที่เลื่อนตามความจำเป็น
+        driver.execute_script("window.scrollBy(0, 300);")
+        time.sleep(1)
+        
+    # รอให้ปุ่มไลค์ปรากฏขึ้น
+    like_button = None
+    try:
+        like_button = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Like"]')
+    except:
+        print("ไม่พบปุ่มไลค์")
+
+    if like_button:
+        # วางเมาส์บนปุ่มไลค์เพื่อเปิดไอคอน reactions
+        webdriver.ActionChains(driver).move_to_element(like_button).perform()
+        time.sleep(2)
+        
+        # คลิกปุ่มไลค์
+        like_button.click()
+        print("Post liked successfully")
+    else:
+        print("การเข้าสู่ระบบล้มเหลว")
 
 # ปิดเบราว์เซอร์
 driver.quit()
