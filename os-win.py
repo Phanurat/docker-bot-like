@@ -1,22 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.webdriver import WebDriver
+from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
-
-# Path to your ChromeDriver
-chrome_driver_path = '/path/to/chromedriver'
 
 # Options for ChromeDriver
 chrome_options = Options()
 chrome_options.add_argument("--start-maximized")
 
-# Initialize WebDriver
-service = Service(chrome_driver_path)
-driver = webdriver.Chrome(service=service, options=chrome_options)
+# Initialize WebDriver using WebDriverManager
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 # URL ของหน้า Facebook ที่ต้องการเข้าถึง
 url = 'https://www.facebook.com/'
