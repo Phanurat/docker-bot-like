@@ -9,26 +9,31 @@ import time
 
 # Options for ChromeDriver
 chrome_options = Options()
-chrome_options.add_argument("--start-maximized")
-chrome_options.add_argument("--disable-notifications")
-chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--disable-dev-shm-usage')
-chrome_options.add_argument('--headless')  # ใช้ headless mode หากต้องการรัน script โดยไม่ต้องแสดง UI
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--ignore-certificate-errors')
 
-# Initialize WebDriver using WebDriverManager
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+# Initialize WebDriver with the path to chromedriver using Service object
+service = Service('/usr/local/bin/chromedriver')
+driver = webdriver.Chrome(service=service, options=chrome_options)
 
-# URL ของหน้า Facebook ที่ต้องการเข้าถึง
 url = 'https://www.facebook.com/'
-
-# เปิดหน้าเว็บ
 driver.get(url)
 
-# รายการคุกกี้ที่คุณให้มา
+# ทดสอบเปิดเว็บไซต์
+#driver.get('https://facebook.com')
+#print(driver.title)
+
+# ปิดเบราว์เซอร์
+#driver.quit()
+
+# List of cookies to add
 cookies_list = [
     {
         'name': 'c_user',
-        'value': '100020688590532',
+        'value': '61551780956965',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -39,7 +44,7 @@ cookies_list = [
     },
     {
         'name': 'xs',
-        'value': '11%3AinhoChAjm4XLPA%3A2%3A1719392933%3A-1%3A11361',
+        'value': '2%3ABwASFB4r47bAtQ%3A2%3A1719545387%3A-1%3A-1',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -50,7 +55,7 @@ cookies_list = [
     },
     {
         'name': 'datr',
-        'value': 'eOlPZjhhJxb4hoWIuz9f0v-b',
+        'value': '6Cx-Zhni96Lh6q9j_Cjqpzo5',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -61,7 +66,7 @@ cookies_list = [
     },
     {
         'name': 'fr',
-        'value': '1YmSZxru2wyb7mCNZ.AWUGodKebFijrAu25EovUc_QsZE.BmesVy..AAA.0.0.Bme9qs.AWVHmaoP3P0',
+        'value': '0dJySyDQ0Kl4a1EZ0.AWV1ESOocP2GBVatKHgOWkH2GMM.Bmfizo..AAA.0.0.Bmfi4t.AWWnm5QpXj0',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -72,52 +77,52 @@ cookies_list = [
     }
 ]
 
-# เพิ่มคุกกี้ในเบราว์เซอร์
+# Add cookies to the browser
 for cookie in cookies_list:
     # Convert expires to int if it is not None
     if cookie['expires']:
         cookie['expires'] = int(cookie['expires'])
     driver.add_cookie(cookie)
 
-# รีเฟรชหน้าเว็บเพื่อใช้คุกกี้
+# Refresh the web page to use the cookies
 driver.refresh()
 
-# รอเวลาให้หน้าเว็บโหลดเสร็จ
+# Wait for the web page to load completely
 time.sleep(5)
 
-# ตรวจสอบสถานะการเข้าสู่ระบบ
+# Check login status
 if "Facebook" in driver.title:
-    print("เข้าสู่ระบบสำเร็จ")
-    
-    # ไปที่ลิงก์ของโพสต์ที่ต้องการไลค์
+    print("Logged in successfully")
+
+    # Go to the link of the post to like
     post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid0m9A3o2mDipAtwHi6KRLWVkezSoRR46jxvoS2gZE9a6hbPrrnwHtroF3bURvv3JRvl'
     driver.get(post_url)
-    
-    # รอเวลาให้หน้าเว็บโหลดเสร็จ
+
+    # Wait for the web page to load completely
     time.sleep(5)
-    
-    # เลื่อนหน้าจอลงเพื่อค้นหาปุ่มไลค์
-    for _ in range(5):  # ปรับจำนวนครั้งที่เลื่อนตามความจำเป็น
+
+    # Scroll down to find the like button
+    for _ in range(5):  # Adjust the number of scrolls as necessary
         driver.execute_script("window.scrollBy(0, 300);")
         time.sleep(1)
-        
-    # รอให้ปุ่มไลค์ปรากฏขึ้น
+
+    # Wait for the like button to appear
     like_button = None
     try:
         like_button = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Like"]')
     except:
-        print("ไม่พบปุ่มไลค์")
+        print("Like button not found")
 
     if like_button:
-        # วางเมาส์บนปุ่มไลค์เพื่อเปิดไอคอน reactions
+        # Hover over the like button to reveal reactions icon
         webdriver.ActionChains(driver).move_to_element(like_button).perform()
         time.sleep(2)
-        
-        # คลิกปุ่มไลค์
+
+        # Click the like button
         like_button.click()
         print("Post liked successfully")
     else:
-        print("การเข้าสู่ระบบล้มเหลว")
+        print("Login failed")
 
-# ปิดเบราว์เซอร์
+# Close the browser
 driver.quit()

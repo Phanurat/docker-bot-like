@@ -17,7 +17,6 @@ import type { Cookie, DeleteCookiesRequest, CookieParam } from '../common/Cookie
 import { FileChooser } from '../common/FileChooser.js';
 import type { PDFOptions } from '../common/PDFOptions.js';
 import type { Viewport } from '../common/Viewport.js';
-import { Accessibility } from './Accessibility.js';
 import { Coverage } from './Coverage.js';
 import type { DeviceRequestPrompt } from './DeviceRequestPrompt.js';
 import type { CdpFrame } from './Frame.js';
@@ -47,7 +46,6 @@ export declare class CdpPage extends Page {
     get touchscreen(): CdpTouchscreen;
     get coverage(): Coverage;
     get tracing(): Tracing;
-    get accessibility(): Accessibility;
     frames(): Frame[];
     workers(): CdpWebWorker[];
     setRequestInterception(value: boolean): Promise<void>;
@@ -86,7 +84,7 @@ export declare class CdpPage extends Page {
         isScreenUnlocked: boolean;
     }): Promise<void>;
     emulateVisionDeficiency(type?: Protocol.Emulation.SetEmulatedVisionDeficiencyRequest['type']): Promise<void>;
-    setViewport(viewport: Viewport): Promise<void>;
+    setViewport(viewport: Viewport | null): Promise<void>;
     viewport(): Viewport | null;
     evaluateOnNewDocument<Params extends unknown[], Func extends (...args: Params) => unknown = (...args: Params) => unknown>(pageFunction: Func | string, ...args: Params): Promise<NewDocumentScriptEvaluation>;
     removeScriptToEvaluateOnNewDocument(identifier: string): Promise<void>;

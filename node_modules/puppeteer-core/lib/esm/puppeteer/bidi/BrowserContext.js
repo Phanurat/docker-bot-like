@@ -51,14 +51,14 @@ import { BidiFrameTarget, BidiPageTarget } from './Target.js';
  */
 let BidiBrowserContext = (() => {
     let _classSuper = BrowserContext;
-    let _instanceExtraInitializers = [];
     let _trustedEmitter_decorators;
     let _trustedEmitter_initializers = [];
+    let _trustedEmitter_extraInitializers = [];
     return class BidiBrowserContext extends _classSuper {
         static {
             const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
             _trustedEmitter_decorators = [bubble()];
-            __esDecorate(this, null, _trustedEmitter_decorators, { kind: "accessor", name: "trustedEmitter", static: false, private: false, access: { has: obj => "trustedEmitter" in obj, get: obj => obj.trustedEmitter, set: (obj, value) => { obj.trustedEmitter = value; } }, metadata: _metadata }, _trustedEmitter_initializers, _instanceExtraInitializers);
+            __esDecorate(this, null, _trustedEmitter_decorators, { kind: "accessor", name: "trustedEmitter", static: false, private: false, access: { has: obj => "trustedEmitter" in obj, get: obj => obj.trustedEmitter, set: (obj, value) => { obj.trustedEmitter = value; } }, metadata: _metadata }, _trustedEmitter_initializers, _trustedEmitter_extraInitializers);
             if (_metadata) Object.defineProperty(this, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
         }
         static from(browser, userContext, options) {
@@ -66,10 +66,10 @@ let BidiBrowserContext = (() => {
             context.#initialize();
             return context;
         }
-        #trustedEmitter_accessor_storage = (__runInitializers(this, _instanceExtraInitializers), __runInitializers(this, _trustedEmitter_initializers, new EventEmitter()));
+        #trustedEmitter_accessor_storage = __runInitializers(this, _trustedEmitter_initializers, new EventEmitter());
         get trustedEmitter() { return this.#trustedEmitter_accessor_storage; }
         set trustedEmitter(value) { this.#trustedEmitter_accessor_storage = value; }
-        #browser;
+        #browser = __runInitializers(this, _trustedEmitter_extraInitializers);
         #defaultViewport;
         // This is public because of cookies.
         userContext;
@@ -88,7 +88,20 @@ let BidiBrowserContext = (() => {
                 this.#createPage(browsingContext);
             }
             this.userContext.on('browsingcontext', ({ browsingContext }) => {
-                this.#createPage(browsingContext);
+                const page = this.#createPage(browsingContext);
+                // We need to wait for the DOMContentLoaded as the
+                // browsingContext still may be navigating from the about:blank
+                browsingContext.once('DOMContentLoaded', () => {
+                    if (browsingContext.originalOpener) {
+                        for (const context of this.userContext.browsingContexts) {
+                            if (context.id === browsingContext.originalOpener) {
+                                this.#pages
+                                    .get(context)
+                                    .trustedEmitter.emit("popup" /* PageEvent.Popup */, page);
+                            }
+                        }
+                    }
+                });
             });
             this.userContext.on('closed', () => {
                 this.trustedEmitter.removeAllListeners();
@@ -184,6 +197,7 @@ let BidiBrowserContext = (() => {
             catch (error) {
                 debugError(error);
             }
+            this.#targets.clear();
         }
         browser() {
             return this.#browser;

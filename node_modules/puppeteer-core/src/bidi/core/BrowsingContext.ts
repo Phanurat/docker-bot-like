@@ -122,9 +122,16 @@ export class BrowsingContext extends EventEmitter<{
     userContext: UserContext,
     parent: BrowsingContext | undefined,
     id: string,
-    url: string
+    url: string,
+    originalOpener: string | null
   ): BrowsingContext {
-    const browsingContext = new BrowsingContext(userContext, parent, id, url);
+    const browsingContext = new BrowsingContext(
+      userContext,
+      parent,
+      id,
+      url,
+      originalOpener
+    );
     browsingContext.#initialize();
     return browsingContext;
   }
@@ -140,12 +147,14 @@ export class BrowsingContext extends EventEmitter<{
   readonly id: string;
   readonly parent: BrowsingContext | undefined;
   readonly userContext: UserContext;
+  readonly originalOpener: string | null;
 
   private constructor(
     context: UserContext,
     parent: BrowsingContext | undefined,
     id: string,
-    url: string
+    url: string,
+    originalOpener: string | null
   ) {
     super();
 
@@ -153,6 +162,7 @@ export class BrowsingContext extends EventEmitter<{
     this.id = id;
     this.parent = parent;
     this.userContext = context;
+    this.originalOpener = originalOpener;
 
     this.defaultRealm = this.#createWindowRealm();
   }
@@ -177,7 +187,8 @@ export class BrowsingContext extends EventEmitter<{
         this.userContext,
         this,
         info.context,
-        info.url
+        info.url,
+        info.originalOpener
       );
       this.#children.set(info.context, browsingContext);
 
@@ -219,7 +230,8 @@ export class BrowsingContext extends EventEmitter<{
       if (info.context !== this.id) {
         return;
       }
-      this.#url = info.url;
+      // Note: we should not update this.#url at this point since the context
+      // has not finished navigating to the info.url yet.
 
       for (const [id, request] of this.#requests) {
         if (request.disposed) {

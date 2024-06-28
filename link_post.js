@@ -8,7 +8,7 @@ const puppeteer = require('puppeteer');
     const cookies = [
         {
             name: 'c_user',
-            value: '100020688590532',
+            value: '61551780956965',
             domain: '.facebook.com',
             path: '/',
             expires: new Date('2025-05-29T06:53:31.187Z').getTime() / 1000,
@@ -19,7 +19,7 @@ const puppeteer = require('puppeteer');
         },
         {
             name: 'xs',
-            value: '11%3AinhoChAjm4XLPA%3A2%3A1719392933%3A-1%3A11361',
+            value: '2%3ABwASFB4r47bAtQ%3A2%3A1719545387%3A-1%3A-1',
             domain: '.facebook.com',
             path: '/',
             expires: new Date('2025-05-29T06:53:31.187Z').getTime() / 1000,
@@ -30,7 +30,7 @@ const puppeteer = require('puppeteer');
         },
         {
             name: 'datr',
-            value: 'eOlPZjhhJxb4hoWIuz9f0v-b',
+            value: '6Cx-Zhni96Lh6q9j_Cjqpzo5',
             domain: '.facebook.com',
             path: '/',
             expires: new Date('2025-06-28T01:12:26.667Z').getTime() / 1000,
@@ -41,7 +41,7 @@ const puppeteer = require('puppeteer');
         },
         {
             name: 'fr',
-            value: '1YmSZxru2wyb7mCNZ.AWUGodKebFijrAu25EovUc_QsZE.BmesVy..AAA.0.0.Bme9qs.AWVHmaoP3P0',
+            value: '0dJySyDQ0Kl4a1EZ0.AWV1ESOocP2GBVatKHgOWkH2GMM.Bmfizo..AAA.0.0.Bmfi4t.AWWnm5QpXj0',
             domain: '.facebook.com',
             path: '/',
             expires: new Date('2024-08-27T06:53:31.187Z').getTime() / 1000,
