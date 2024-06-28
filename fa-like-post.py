@@ -36,7 +36,7 @@ cookies_list = [
     },
     {
         'name': 'xs',
-        'value': '33%3A6G4mSdVIL5wfOQ%3A2%3A1719565792%3A-1%3A-1%3A%3AAcVO1U7ZF1isKyX9_pqiEcC8h5pdZWG6GUDzHmuOXQ',
+        'value': '33%3A6G4mSdVIL5wfOQ%3A2%3A1719565792%3A-1%3A-1',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -58,7 +58,7 @@ cookies_list = [
     },
     {
         'name': 'fr',
-        'value': '1c2kDQYAvYB0GJ58k.AWVV2qJZtlsr4c3SP8aggBOB-jc.BmfoVp..AAA.0.0.BmfoVp.AWXgufNOvaQ',
+        'value': '1aEI7b51g68G8tVZ6.AWWn_uziFl2gSX0P-aIcVa65zDo.BmfnS-..AAA.0.0.Bmfn3i.AWUsEx6r6U8',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -83,17 +83,17 @@ driver.refresh()
 time.sleep(5)
 
 # ตรวจสอบสถานะการเข้าสู่ระบบ
-# ตรวจสอบสถานะการเข้าสู่ระบบ
 if "Facebook" in driver.title:
     print("เข้าสู่ระบบสำเร็จ")
-    #Read notification
-    post_url = 'https://www.facebook.com/notifications'
-    driver.get(post_url)
-    time.sleep(5)
-    post_url = 'https://www.facebook.com/'
-    driver.get(post_url)
-    time.sleep(5)
-    
+
+    # ค้นหาโพสต์ที่ต้องการไลค์ (ในที่นี้จะใช้กดไลค์โพสต์ตัวแรกที่ปรากฏ)
+    try:
+        like_button = driver.find_element(By.XPATH, "//div[@aria-label='Like']")
+        like_button.click()
+        print("กดไลค์โพสต์สำเร็จ")
+    except Exception as e:
+        print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
+
 else:
     print("การเข้าสู่ระบบล้มเหลว")
 
