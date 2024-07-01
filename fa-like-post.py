@@ -84,12 +84,13 @@ time.sleep(5)
 
 # ตรวจสอบสถานะการเข้าสู่ระบบ
 if "Facebook" in driver.title:
-    print("เข้าสู่ระบบสำเร็จ")
+    #
 
     # ค้นหาโพสต์ที่ต้องการไลค์ (ในที่นี้จะใช้กดไลค์โพสต์ตัวแรกที่ปรากฏ)
     try:
         like_button = driver.find_element(By.XPATH, "//div[@aria-label='Like']")
         like_button.click()
+        print("เข้าสู่ระบบสำเร็จ")
         print("กดไลค์โพสต์สำเร็จ")
     except Exception as e:
         print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
