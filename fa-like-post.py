@@ -23,51 +23,51 @@ driver.get(url)
 
 # รายการคุกกี้ที่คุณให้มา
 cookies_list = [
-    {
-        'name': 'c_user',
-        'value': '61551780956965',
-        'domain': '.facebook.com',
-        'path': '/',
-        'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
-        'httpOnly': False,
-        'secure': True,
-        'session': False,
-        'sameSite': 'None'
-    },
-    {
-        'name': 'xs',
-        'value': '33%3A6G4mSdVIL5wfOQ%3A2%3A1719565792%3A-1%3A-1',
-        'domain': '.facebook.com',
-        'path': '/',
-        'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
-        'httpOnly': True,
-        'secure': True,
-        'session': False,
-        'sameSite': 'None'
-    },
-    {
-        'name': 'datr',
-        'value': '9DV9ZozopZitRFfYOfDeZhrr',
-        'domain': '.facebook.com',
-        'path': '/',
-        'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
-        'httpOnly': True,
-        'secure': True,
-        'session': False,
-        'sameSite': 'None'
-    },
-    {
-        'name': 'fr',
-        'value': '1aEI7b51g68G8tVZ6.AWWn_uziFl2gSX0P-aIcVa65zDo.BmfnS-..AAA.0.0.Bmfn3i.AWUsEx6r6U8',
-        'domain': '.facebook.com',
-        'path': '/',
-        'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
-        'httpOnly': True,
-        'secure': True,
-        'session': False,
-        'sameSite': 'None'
-    }
-]
+        {
+            'name': 'c_user',
+            'value': '61551780956965',
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': False,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        },
+        {
+            'name': 'xs',
+            'value': '27%3AO7lf2Br_zLQqDg%3A2%3A1719806925%3A-1%3A-1',
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': True,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        },
+        {
+            'name': 'datr',
+            'value': 'IGaBZofFdrTky3WbsH7c9oSG',
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': True,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        },
+        {
+            'name': 'fr',
+            'value': '0fAyHsfOcLQLhRWWF.AWWOpJ7tqCdu3z1cGNe2bqGMT-w.BmgWYg..AAA.0.0.BmgivP.AWUyO8hDlT0',
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': True,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        }
+    ]
 
 # เพิ่มคุกกี้ในเบราว์เซอร์
 for cookie in cookies_list:

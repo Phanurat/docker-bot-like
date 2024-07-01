@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
+import random
 
 # Options for ChromeDriver
 chrome_options = Options()
@@ -22,107 +23,129 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 url = 'https://www.facebook.com/'
 driver.get(url)
 
-# ทดสอบเปิดเว็บไซต์
-#driver.get('https://facebook.com')
-#print(driver.title)
+def notify():
+    print("Opening Notifications!")
+    driver.get('https://www.facebook.com/notifications')
+    time.sleep(5)
 
-# ปิดเบราว์เซอร์
-#driver.quit()
+def like_post():
+    print("Like Post!!")
+    driver.get('https://www.facebook.com/')
+    try:
+        like_buttons = driver.find_elements(By.XPATH, "//div[@aria-label='Like']")
+        if like_buttons:
+            random.choice(like_buttons).click()
+            print("กดไลค์โพสต์สำเร็จ")
+        else:
+            print("ไม่พบปุ่มไลค์")
+    except Exception as e:
+        print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
 
-# List of cookies to add
-cookies_list = [
-    {
-        'name': 'c_user',
-        'value': '61551780956965',
-        'domain': '.facebook.com',
-        'path': '/',
-        'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
-        'httpOnly': False,
-        'secure': True,
-        'session': False,
-        'sameSite': 'None'
-    },
-    {
-        'name': 'xs',
-        'value': '2%3ABwASFB4r47bAtQ%3A2%3A1719545387%3A-1%3A-1',
-        'domain': '.facebook.com',
-        'path': '/',
-        'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
-        'httpOnly': True,
-        'secure': True,
-        'session': False,
-        'sameSite': 'None'
-    },
-    {
-        'name': 'datr',
-        'value': '6Cx-Zhni96Lh6q9j_Cjqpzo5',
-        'domain': '.facebook.com',
-        'path': '/',
-        'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
-        'httpOnly': True,
-        'secure': True,
-        'session': False,
-        'sameSite': 'None'
-    },
-    {
-        'name': 'fr',
-        'value': '0dJySyDQ0Kl4a1EZ0.AWV1ESOocP2GBVatKHgOWkH2GMM.Bmfizo..AAA.0.0.Bmfi4t.AWWnm5QpXj0',
-        'domain': '.facebook.com',
-        'path': '/',
-        'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
-        'httpOnly': True,
-        'secure': True,
-        'session': False,
-        'sameSite': 'None'
-    }
-]
+def link_comment():
+    print("Comment it Work!")
+    # Add your comment functionality here
 
-# Add cookies to the browser
-for cookie in cookies_list:
-    # Convert expires to int if it is not None
-    if cookie['expires']:
-        cookie['expires'] = int(cookie['expires'])
-    driver.add_cookie(cookie)
+def read_story():
+    print("Reading Story!!")
+    # Add your read story functionality here
 
-# Refresh the web page to use the cookies
-driver.refresh()
+def event_random():
+    list_event = ["story", "like_post", "like_comment", "notify"]
+    random_event = random.choice(list_event)
+    print("Event Next ==>", random_event)
 
-# Wait for the web page to load completely
-time.sleep(5)
+    if random_event == "story":
+        read_story()
+    
+    elif random_event == "like_post":
+        like_post()
+    
+    elif random_event == "like_comment":
+        link_comment()
+    
+    elif random_event == "notify":
+        notify()
 
-# Check login status
-if "Facebook" in driver.title:
-    print("Logged in successfully")
+def timeline_scroll():
+    scroll_random = random.uniform(4, 6)
+    print("Timeline Scroll Monitor!!")
+    for _ in range(int(scroll_random)):
+        driver.execute_script("window.scrollBy(0, 180);")
+        time.sleep(2)
 
-    # Go to the link of the post to like
-    post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid0m9A3o2mDipAtwHi6KRLWVkezSoRR46jxvoS2gZE9a6hbPrrnwHtroF3bURvv3JRvl'
-    driver.get(post_url)
+def login_succ():
+    # List of cookies you provided
+    cookies_list = [
+        {
+            'name': 'c_user',
+            'value': '61551780956965',
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': False,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        },
+        {
+            'name': 'xs',
+            'value': '27%3AO7lf2Br_zLQqDg%3A2%3A1719806925%3A-1%3A-1',
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': True,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        },
+        {
+            'name': 'datr',
+            'value': 'IGaBZofFdrTky3WbsH7c9oSG',
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': True,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        },
+        {
+            'name': 'fr',
+            'value': '0fAyHsfOcLQLhRWWF.AWWOpJ7tqCdu3z1cGNe2bqGMT-w.BmgWYg..AAA.0.0.BmgivP.AWUyO8hDlT0',
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': True,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        }
+    ]
+
+    # Add cookies to the browser
+    for cookie in cookies_list:
+        # Convert expires to int if it is not None
+        if cookie['expires']:
+            cookie['expires'] = int(cookie['expires'])
+        driver.add_cookie(cookie)
+
+    # Refresh the web page to use cookies
+    driver.refresh()
 
     # Wait for the web page to load completely
     time.sleep(5)
 
-    # Scroll down to find the like button
-    for _ in range(5):  # Adjust the number of scrolls as necessary
-        driver.execute_script("window.scrollBy(0, 300);")
-        time.sleep(1)
-
-    # Wait for the like button to appear
-    like_button = None
-    try:
-        like_button = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Like"]')
-    except:
-        print("Like button not found")
-
-    if like_button:
-        # Hover over the like button to reveal reactions icon
-        webdriver.ActionChains(driver).move_to_element(like_button).perform()
-        time.sleep(2)
-
-        # Click the like button
-        like_button.click()
-        print("Post liked successfully")
+    # Check login status
+    if "Facebook" in driver.title:
+        print("เข้าสู่ระบบสำเร็จ")
+        while True:
+            event_random()
+            timeline_scroll()
+            time.sleep(5)
     else:
-        print("Login failed")
+        print("การเข้าสู่ระบบล้มเหลว")
 
-# Close the browser
-driver.quit()
+    # ปิดเบราว์เซอร์
+    driver.quit()
+
+login_succ()
