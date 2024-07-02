@@ -23,6 +23,19 @@ url = 'https://www.facebook.com/'
 # Open the web page
 driver.get(url)
 
+def get_link_post():
+    api_link_url = "https://script.google.com/macros/s/AKfycbwex5szoBPlP4sW1c3lNLqecfAKwOnm6XnaiJUIaO33MSzhFXDXZTItwKH7cH1vCq3YIw/exec"
+    
+    response = requests.get(api_link_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        links = [item['link'] for item in data['data']]
+        return links
+    else:
+        print(f"Error Status code: {response.status_code}")
+        return []
+
 def get_random_comment():
     api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
 
@@ -31,19 +44,10 @@ def get_random_comment():
     if response.status_code == 200:
         data = response.json()
         comments = [item['comment'] for item in data['data']]
-
-        #ค่าเดิมจากสุ่มรอบแรง
-        #selected_comment = random.choice(comments)
-
-        #Try Test
-        selected_comment = comments
-        return selected_comment
-
+        return random.choice(comments)
     else:
         print(f"Error Status Code: {response.status_code}")
-        return None
-    
-selected_comment = get_random_comment() 
+        return ""
 
 def notify():
     print("Opening Notifications!")
@@ -65,7 +69,12 @@ def like_post():
         print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
 
 def link_comment():
-    post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
+    selected_link = get_link_post()
+    if not selected_link:
+        print("ไม่มีลิงก์โพสต์ที่ได้รับมา")
+        return
+
+    post_url = random.choice(selected_link)
     driver.get(post_url)
     time.sleep(5)
 
@@ -77,7 +86,7 @@ def link_comment():
             '//div[@role="textbox"]',
         ]
         comment_input = None
-        
+
         for xpath in xpaths:
             try:
                 comment_input = driver.find_element(By.XPATH, xpath)
@@ -85,24 +94,23 @@ def link_comment():
                     break
             except:
                 continue
-        
+
         if not comment_input:
-            raise Exception("No Comment")
+            raise Exception("ไม่สามารถหาช่องคอมเมนต์ได้")
 
         comment_input.click()
         time.sleep(2)
-        
-        #random comment list
-        comment_text = random.choice(selected_comment)
+
+        comment_text = get_random_comment()
+        if not comment_text:
+            print("ไม่มีคอมเมนต์ที่ได้รับมา")
+            return
+
         comment_input.send_keys(comment_text)
         comment_input.send_keys(Keys.ENTER)
-        print(f"Add comment'{comment_text}' Done!")
-
+        print(f"เพิ่มคอมเมนต์ '{comment_text}' สำเร็จ")
     except Exception as e:
-        print(f"Can't Comment: {str(e)}")
-    
-    print("Comment it Work!")
-    # Add your comment functionality here
+        print(f"ไม่สามารถเพิ่มคอมเมนต์ได้: {str(e)}")
 
 def read_story():
     print("Reading Story!!")
@@ -115,13 +123,10 @@ def event_random():
 
     if random_event == "story":
         read_story()
-    
     elif random_event == "like_post":
         like_post()
-    
     elif random_event == "like_comment":
         link_comment()
-    
     elif random_event == "notify":
         notify()
 

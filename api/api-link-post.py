@@ -17,17 +17,20 @@ def get_link_post():
         links = [item['link'] for item in data['data']]
 
         # สุ่มเลือก comment 1 ตัว
-        selected_link = random.choice(links)
+        #selected_link = random.choice(links)
 
         # แสดงผล comment ที่ถูกสุ่มเลือก
-        print("Selected Link:", selected_link)
+        #print("Selected Link:", links)
 
-        return selected_link
+        return links
 
     else:
         print(f"Failed to fetch data. Status code: {response.status_code}")
         return None
 
 # เรียกใช้ฟังก์ชันเพื่อสุ่มเลือก comment และแสดงผล
-selected_link = get_link_post()
-print("Outside function:", selected_link)
+while True:
+    selected_link = get_link_post()
+    link_choice = random.choice(selected_link)
+    print("select: ",link_choice)
+#print("Outside function:", selected_link)
