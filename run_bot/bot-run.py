@@ -7,6 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import random
 import time
+import requests
 
 # Options for ChromeDriver
 chrome_options = Options()
@@ -21,6 +22,28 @@ url = 'https://www.facebook.com/'
 
 # Open the web page
 driver.get(url)
+
+def get_random_comment():
+    api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
+
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        comments = [item['comment'] for item in data['data']]
+
+        #ค่าเดิมจากสุ่มรอบแรง
+        #selected_comment = random.choice(comments)
+
+        #Try Test
+        selected_comment = comments
+        return selected_comment
+
+    else:
+        print(f"Error Status Code: {response.status_code}")
+        return None
+    
+selected_comment = get_random_comment() 
 
 def notify():
     print("Opening Notifications!")
@@ -42,6 +65,42 @@ def like_post():
         print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
 
 def link_comment():
+    post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
+    driver.get(post_url)
+    time.sleep(5)
+
+    try:
+        xpaths = [
+            '//div[@aria-label="Write a comment"]',
+            '//div[@aria-label="Write a comment..."]',
+            '//div[contains(@aria-label, "Write a comment")]',
+            '//div[@role="textbox"]',
+        ]
+        comment_input = None
+        
+        for xpath in xpaths:
+            try:
+                comment_input = driver.find_element(By.XPATH, xpath)
+                if comment_input:
+                    break
+            except:
+                continue
+        
+        if not comment_input:
+            raise Exception("No Comment")
+
+        comment_input.click()
+        time.sleep(2)
+        
+        #random comment list
+        comment_text = random.choice(selected_comment)
+        comment_input.send_keys(comment_text)
+        comment_input.send_keys(Keys.ENTER)
+        print(f"Add comment'{comment_text}' Done!")
+
+    except Exception as e:
+        print(f"Can't Comment: {str(e)}")
+    
     print("Comment it Work!")
     # Add your comment functionality here
 
@@ -89,7 +148,7 @@ def login_succ():
         },
         {
             'name': 'xs',
-            'value': '27%3AO7lf2Br_zLQqDg%3A2%3A1719806925%3A-1%3A-1%3A%3AAcW4RPkIykn8lQYu4Nm_foTCx4tGxZGY40_NUcEYpw',
+            'value': '28%3AvxWS-P6HoYsIsQ%3A2%3A1719890496%3A-1%3A-1',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -100,7 +159,7 @@ def login_succ():
         },
         {
             'name': 'datr',
-            'value': 'IGaBZofFdrTky3WbsH7c9oSG',
+            'value': 'L3KDZhBP2TiorgX_frlkQbvx',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -111,7 +170,7 @@ def login_succ():
         },
         {
             'name': 'fr',
-            'value': '1ZvyEUA55Qoj7cNS9.AWW8SZRiBgILjzpkQJT9V0onmCk.BmgmKP..AAA.0.0.BmgmKP.AWXlPQ1hEFY',
+            'value': '0TprfQir7mFxJRsv4.AWUzaEZ3Cj_mcixj-hKBc_gGinM.Bmg3I2..AAA.0.0.Bmg3I_.AWUID-x-DwU',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
