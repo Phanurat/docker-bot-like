@@ -15,13 +15,13 @@ chrome_options.add_argument("--disable-notifications")
 # Initialize WebDriver using WebDriverManager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-# URL of the Facebook page to access
-url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
+# URL ของหน้า Facebook ที่ต้องการเข้าถึง
+url = 'https://www.facebook.com/'
 
-# Open the web page
+# เปิดหน้าเว็บ
 driver.get(url)
 
-# List of cookies provided
+# รายการคุกกี้ที่คุณให้มา
 cookies_list = [
     {
         'name': 'c_user',
@@ -36,7 +36,7 @@ cookies_list = [
     },
     {
         'name': 'xs',
-        'value': '27%3AO7lf2Br_zLQqDg%3A2%3A1719806925%3A-1%3A-1',
+        'value': '28%3AvxWS-P6HoYsIsQ%3A2%3A1719890496%3A-1%3A-1',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -47,7 +47,7 @@ cookies_list = [
     },
     {
         'name': 'datr',
-        'value': 'IGaBZofFdrTky3WbsH7c9oSG',
+        'value': 'L3KDZhBP2TiorgX_frlkQbvx',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -58,7 +58,7 @@ cookies_list = [
     },
     {
         'name': 'fr',
-        'value': '0fAyHsfOcLQLhRWWF.AWWOpJ7tqCdu3z1cGNe2bqGMT-w.BmgWYg..AAA.0.0.BmgivP.AWUyO8hDlT0',
+        'value': '0TprfQir7mFxJRsv4.AWUzaEZ3Cj_mcixj-hKBc_gGinM.Bmg3I2..AAA.0.0.Bmg3I_.AWUID-x-DwU',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -69,69 +69,60 @@ cookies_list = [
     }
 ]
 
-# Add cookies to the browser
+# เพิ่มคุกกี้ในเบราว์เซอร์
 for cookie in cookies_list:
+    # Convert expires to int if it is not None
+    if cookie['expires']:
+        cookie['expires'] = int(cookie['expires'])
     driver.add_cookie(cookie)
 
-# Refresh the web page to use cookies
+# รีเฟรชหน้าเว็บเพื่อใช้คุกกี้
 driver.refresh()
 
-# Wait for the web page to finish loading
+# รอเวลาให้หน้าเว็บโหลดเสร็จ
 time.sleep(5)
 
-# Check login status
+# ตรวจสอบสถานะการเข้าสู่ระบบ
 if "Facebook" in driver.title:
     print("เข้าสู่ระบบสำเร็จ")
     
-    # Navigate to the link of the post to like
+    # ไปที่โพสต์ที่ต้องการคอมเมนต์
     post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
     driver.get(post_url)
-    
-    # Wait for the web page to finish loading
     time.sleep(5)
     
-    # Scroll down to find the like button
-    for _ in range(5):  # Adjust the number of times to scroll as needed
-        driver.execute_script("window.scrollBy(0, 300);")
-        time.sleep(1)
-        
-    # Wait for the like button to appear
-    like_button = None
     try:
-        like_button = driver.find_element(By.CSS_SELECTOR, 'div[aria-label="Like"]')
-    except:
-        print("ไม่พบปุ่มไลค์")
-
-    if like_button:
-        # Hover over the like button to reveal the reactions icon
-        webdriver.ActionChains(driver).move_to_element(like_button).perform()
+        # ลองใช้ XPath ต่างๆ เพื่อหาช่องคอมเมนต์
+        xpaths = [
+            '//div[@aria-label="Write a comment"]',
+            '//div[@aria-label="Write a comment..."]',
+            '//div[contains(@aria-label, "Write a comment")]',
+            '//div[@role="textbox"]',
+        ]
+        comment_input = None
+        for xpath in xpaths:
+            try:
+                comment_input = driver.find_element(By.XPATH, xpath)
+                if comment_input:
+                    break
+            except:
+                continue
+        
+        if not comment_input:
+            raise Exception("ไม่สามารถหาช่องคอมเมนต์ได้")
+        
+        comment_input.click()
         time.sleep(2)
-        
-        # Click the like button
-        like_button.click()
-        print("ไลค์โพสต์สำเร็จ")
-        
-        # Wait for the comment input area to be visible
-        try:
-            comment_input = driver.find_element(By.XPATH, '//div[@role="textbox" and @aria-label="Comment on this post"]')
-            comment_input.click()
-            time.sleep(2)
-            
-            # Enter the comment text
-            comment_text = "Hello from the automated bot!"
-            comment_input.send_keys(comment_text)
-            comment_input.send_keys(Keys.ENTER)
-            print(f"เพิ่มคอมเมนต์ '{comment_text}' สำเร็จ")
-            
-        except Exception as e:
-            print(f"ไม่สามารถเพิ่มคอมเมนต์ได้: {str(e)}")
 
-            
-    else:
-        print("ไม่สามารถหาปุ่มไลค์ได้ หรือ การเข้าสู่ระบบล้มเหลว")
-
+        # พิมพ์คอมเมนต์
+        comment_text = "Hello From the automated bot!"
+        comment_input.send_keys(comment_text)
+        comment_input.send_keys(Keys.ENTER)
+        print(f"เพิ่มคอมเมนต์ '{comment_text}' สำเร็จ")
+    except Exception as e:
+        print(f"ไม่สามารถเพิ่มคอมเมนต์ได้: {str(e)}")
 else:
     print("การเข้าสู่ระบบล้มเหลว")
 
-# Close the browser
+# ปิดเบราว์เซอร์
 driver.quit()

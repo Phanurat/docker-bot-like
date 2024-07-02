@@ -36,7 +36,7 @@ cookies_list = [
     },
     {
         'name': 'xs',
-        'value': '33%3A6G4mSdVIL5wfOQ%3A2%3A1719565792%3A-1%3A-1%3A%3AAcVO1U7ZF1isKyX9_pqiEcC8h5pdZWG6GUDzHmuOXQ',
+        'value': '28%3AvxWS-P6HoYsIsQ%3A2%3A1719890496%3A-1%3A-1',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -47,7 +47,7 @@ cookies_list = [
     },
     {
         'name': 'datr',
-        'value': '9DV9ZozopZitRFfYOfDeZhrr',
+        'value': 'L3KDZhBP2TiorgX_frlkQbvx',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -58,7 +58,7 @@ cookies_list = [
     },
     {
         'name': 'fr',
-        'value': '1c2kDQYAvYB0GJ58k.AWVV2qJZtlsr4c3SP8aggBOB-jc.BmfoVp..AAA.0.0.BmfoVp.AWXgufNOvaQ',
+        'value': '0TprfQir7mFxJRsv4.AWUzaEZ3Cj_mcixj-hKBc_gGinM.Bmg3I2..AAA.0.0.Bmg3I_.AWUID-x-DwU',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
