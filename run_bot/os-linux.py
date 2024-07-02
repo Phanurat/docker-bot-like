@@ -7,6 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
 import random
+import requests
 
 # Options for ChromeDriver
 chrome_options = Options()
@@ -22,6 +23,31 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 
 url = 'https://www.facebook.com/'
 driver.get(url)
+
+def get_link_post():
+    api_link_url = "https://script.google.com/macros/s/AKfycbwex5szoBPlP4sW1c3lNLqecfAKwOnm6XnaiJUIaO33MSzhFXDXZTItwKH7cH1vCq3YIw/exec"
+
+    response = requests.get(api_link_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        links = [item['link'] for item in data['data']]
+        return links
+    else:
+        print(f"Error Status Code: {response.status_code}")
+        return []
+def get_random_comment():
+    api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
+
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        comments = [item['comment'] for item in data['data']]
+        return random.choices(comments)
+    else:
+        print(f"Error Status Code: {response.status_code}")
+        return ""
 
 def notify():
     print("Opening Notifications!")
@@ -42,8 +68,49 @@ def like_post():
         print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
 
 def link_comment():
-    print("Comment it Work!")
-    # Add your comment functionality here
+    selected_link = get_link_post()
+    if not selected_link:
+        print("ไม่มีลิงก์โพสต์ที่ได้รับมา")
+        return
+
+    post_url = random.choice(selected_link)
+    driver.get(post_url)
+    time.sleep(5)
+
+    try:
+        xpaths = [
+            '//div[@aria-label="Write a comment"]',
+            '//div[@aria-label="Write a comment..."]',
+            '//div[contains(@aria-label, "Write a comment")]',
+            '//div[@role="textbox"]',
+        ]
+        comment_input = None
+
+        for xpath in xpaths:
+            try:
+                comment_input = driver.find_element(By.XPATH, xpath)
+                if comment_input:
+                    break
+            except:
+                continue
+
+        if not comment_input:
+            raise Exception("ไม่สามารถหาช่องคอมเมนต์ได้")
+
+        comment_input.click()
+        time.sleep(2)
+
+        comment_text = get_random_comment()
+        if not comment_text:
+            print("ไม่มีคอมเมนต์ที่ได้รับมา")
+            return
+
+        comment_input.send_keys(comment_text)
+        comment_input.send_keys(Keys.ENTER)
+        print(f"เพิ่มคอมเมนต์ '{comment_text}' สำเร็จ")
+    except Exception as e:
+        print(f"ไม่สามารถเพิ่มคอมเมนต์ได้: {str(e)}")
+
 
 def read_story():
     print("Reading Story!!")
@@ -89,7 +156,7 @@ def login_succ():
         },
         {
             'name': 'xs',
-            'value': '27%3AO7lf2Br_zLQqDg%3A2%3A1719806925%3A-1%3A-1',
+            'value': '28%3AvxWS-P6HoYsIsQ%3A2%3A1719890496%3A-1%3A-1',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -100,7 +167,7 @@ def login_succ():
         },
         {
             'name': 'datr',
-            'value': 'IGaBZofFdrTky3WbsH7c9oSG',
+            'value': 'L3KDZhBP2TiorgX_frlkQbvx',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -111,7 +178,7 @@ def login_succ():
         },
         {
             'name': 'fr',
-            'value': '0fAyHsfOcLQLhRWWF.AWWOpJ7tqCdu3z1cGNe2bqGMT-w.BmgWYg..AAA.0.0.BmgivP.AWUyO8hDlT0',
+            'value': '0TprfQir7mFxJRsv4.AWUzaEZ3Cj_mcixj-hKBc_gGinM.Bmg3I2..AAA.0.0.Bmg3I_.AWUID-x-DwU',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
