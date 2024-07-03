@@ -18,7 +18,7 @@ chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--ignore-certificate-errors')
 
 # Initialize WebDriver with the path to chromedriver using Service object
-service = Service(ChromeDriverManager().install())
+service = Service('/usr/local/bin/chromedriver')
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 url = 'https://www.facebook.com/'
@@ -36,7 +36,6 @@ def get_link_post():
     else:
         print(f"Error Status Code: {response.status_code}")
         return []
-
 def get_random_comment():
     api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
 
@@ -114,17 +113,7 @@ def link_comment():
 
 def read_story():
     print("Reading Story!!")
-    driver.get('https://www.facebook.com/stories')  # ปรับ URL ตามที่ต้องการ
-    time.sleep(5)
-    try:
-        story_buttons = driver.find_elements(By.XPATH, "//div[@aria-label='Play']")
-        if story_buttons:
-            random.choice(story_buttons).click()
-            print("กำลังดู Story")
-        else:
-            print("ไม่พบปุ่มเล่น Story")
-    except Exception as e:
-        print(f"เกิดข้อผิดพลาดในการดู Story: {str(e)}")
+    # Add your read story functionality here
 
 def event_random():
     list_event = ["story", "like_post", "like_comment", "notify"]
@@ -133,10 +122,13 @@ def event_random():
 
     if random_event == "story":
         read_story()
+    
     elif random_event == "like_post":
         like_post()
+    
     elif random_event == "like_comment":
         link_comment()
+    
     elif random_event == "notify":
         notify()
 
