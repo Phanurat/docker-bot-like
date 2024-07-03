@@ -24,28 +24,6 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 url = 'https://www.facebook.com/'
 driver.get(url)
 
-def get_random_link():
-    # URL ของ Google Apps Script API
-    api_link_url = "https://script.google.com/macros/s/AKfycbyxlbV2VimWwSSBtPiAN0MfV9FDju6cwoOuQ3sM7mvzbnbTtTK7wyFdNPwNRJf1qoc4WQ/exec"
-
-    # ส่งคำขอ GET ไปยัง API
-    response = requests.get(api_link_url)
-
-    # ตรวจสอบสถานะคำขอ
-    if response.status_code == 200:
-        # แปลงข้อมูลที่ได้จาก API ให้เป็น JSON
-        data = response.json()
-
-        # สร้าง list ของ comment
-        links = [item['link'] for item in data['data']]
-
-        return links
-
-    else:
-        print(f"Failed to fetch data. Status code: {response.status_code}")
-        return None
-
-selected_link = get_random_link()
     
 def get_random_comment():
     api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
@@ -80,8 +58,8 @@ def like_post():
 
 def link_comment():
     
-    post_url = selected_link
-    driver.get(random.choice(po))
+    post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
+    driver.get(post_url)
     time.sleep(5)
 
     try:
