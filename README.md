@@ -9,5 +9,23 @@
  - Window10
  - Linux Ununtu
 
+ ### Install Linux Ubuntu 
  ```sh
  sudo apt-get install python3
+ ```
+ #### install webdirver 
+ ```sh
+ pip install webdriver-manager
+ ```
+ Download Chromedriver
+ ```sh
+ wget https://chromedriver.storage.googleapis.com/$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
+```
+ Extract Zip
+ ```sh
+ unzip chromedriver_linux64.zip
+```
+ move
+ ```sh
+ sudo mv chromedriver /usr/local/bin/
+```
