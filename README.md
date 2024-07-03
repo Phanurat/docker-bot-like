@@ -11,7 +11,7 @@
 
  ### Clone Project
  ```sh
-git clone https://github.com/yourusername/docker-bot-like.git
+git clone https://github.com/Phanurat/docker-bot-like.git
 cd dokcer-bot-like
 ```
 
