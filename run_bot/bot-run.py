@@ -23,18 +23,28 @@ url = 'https://www.facebook.com/'
 # Open the web page
 driver.get(url)
 
-def get_link_post():
-    api_link_url = "https://script.google.com/macros/s/AKfycbwex5szoBPlP4sW1c3lNLqecfAKwOnm6XnaiJUIaO33MSzhFXDXZTItwKH7cH1vCq3YIw/exec"
-    
+def get_random_link():
+    # URL ของ Google Apps Script API
+    api_link_url = "https://script.google.com/macros/s/AKfycbyxlbV2VimWwSSBtPiAN0MfV9FDju6cwoOuQ3sM7mvzbnbTtTK7wyFdNPwNRJf1qoc4WQ/exec"
+
+    # ส่งคำขอ GET ไปยัง API
     response = requests.get(api_link_url)
 
+    # ตรวจสอบสถานะคำขอ
     if response.status_code == 200:
+        # แปลงข้อมูลที่ได้จาก API ให้เป็น JSON
         data = response.json()
+
+        # สร้าง list ของ comment
         links = [item['link'] for item in data['data']]
+
         return links
+
     else:
-        print(f"Error Status code: {response.status_code}")
-        return []
+        print(f"Failed to fetch data. Status code: {response.status_code}")
+        return None
+
+selected_link = get_random_link()
 
 def get_random_comment():
     api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
@@ -44,10 +54,19 @@ def get_random_comment():
     if response.status_code == 200:
         data = response.json()
         comments = [item['comment'] for item in data['data']]
-        return random.choice(comments)
+
+        #ค่าเดิมจากสุ่มรอบแรง
+        #selected_comment = random.choice(comments)
+
+        #Try Test
+        selected_comment = comments
+        return selected_comment
+
     else:
         print(f"Error Status Code: {response.status_code}")
-        return ""
+        return None
+    
+selected_comment = get_random_comment() 
 
 def notify():
     print("Opening Notifications!")
@@ -69,13 +88,9 @@ def like_post():
         print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
 
 def link_comment():
-    selected_link = get_link_post()
-    if not selected_link:
-        print("ไม่มีลิงก์โพสต์ที่ได้รับมา")
-        return
-
-    post_url = random.choice(selected_link)
-    driver.get(post_url)
+    #post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
+    post_url = selected_link
+    driver.get(random.choice(post_url))
     time.sleep(5)
 
     try:
@@ -86,7 +101,7 @@ def link_comment():
             '//div[@role="textbox"]',
         ]
         comment_input = None
-
+        
         for xpath in xpaths:
             try:
                 comment_input = driver.find_element(By.XPATH, xpath)
@@ -94,23 +109,24 @@ def link_comment():
                     break
             except:
                 continue
-
+        
         if not comment_input:
-            raise Exception("ไม่สามารถหาช่องคอมเมนต์ได้")
+            raise Exception("No Comment")
 
         comment_input.click()
         time.sleep(2)
-
-        comment_text = get_random_comment()
-        if not comment_text:
-            print("ไม่มีคอมเมนต์ที่ได้รับมา")
-            return
-
+        
+        #random comment list
+        comment_text = random.choice(selected_comment)
         comment_input.send_keys(comment_text)
         comment_input.send_keys(Keys.ENTER)
-        print(f"เพิ่มคอมเมนต์ '{comment_text}' สำเร็จ")
+        print(f"Add comment'{comment_text}' Done!")
+
     except Exception as e:
-        print(f"ไม่สามารถเพิ่มคอมเมนต์ได้: {str(e)}")
+        print(f"Can't Comment: {str(e)}")
+    
+    print("Comment it Work!")
+    # Add your comment functionality here
 
 def read_story():
     print("Reading Story!!")
@@ -123,10 +139,13 @@ def event_random():
 
     if random_event == "story":
         read_story()
+    
     elif random_event == "like_post":
         like_post()
+    
     elif random_event == "like_comment":
         link_comment()
+    
     elif random_event == "notify":
         notify()
 
