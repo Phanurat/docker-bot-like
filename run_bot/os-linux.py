@@ -24,7 +24,22 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 url = 'https://www.facebook.com/'
 driver.get(url)
 
+def get_random_link():
+    api_link_url = "https://script.google.com/macros/s/AKfycbyxlbV2VimWwSSBtPiAN0MfV9FDju6cwoOuQ3sM7mvzbnbTtTK7wyFdNPwNRJf1qoc4WQ/exec"
+    response = requests.get(api_link_url)
+
+    if response.status_code == 200:
+        data = response.json()
+        
+        links = [item['link'] for item in data['data']]
+        
+        return links
     
+    else:
+        print(f"Failed to data. Status code: {response.status_code}")
+        return links
+selected_link = get_random_link()
+
 def get_random_comment():
     api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
 
@@ -58,8 +73,9 @@ def like_post():
 
 def link_comment():
     
-    post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
-    driver.get(post_url)
+    #post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
+    post_url = selected_link
+    driver.get(random.choice(post_url))
     time.sleep(5)
 
     try:
