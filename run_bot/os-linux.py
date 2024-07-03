@@ -1,26 +1,26 @@
+import requests
+import random
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
-import random
-import requests
 
 # Options for ChromeDriver
 chrome_options = Options()
-chrome_options.add_argument('--headless')
+chrome_options.add_argument('--headless')  # Run in headless mode for testing; remove if you need to debug
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--ignore-certificate-errors')
 
 # Initialize WebDriver with the path to chromedriver using Service object
-service = Service('/usr/local/bin/chromedriver')
+service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
+# URL ของ Facebook
 url = 'https://www.facebook.com/'
 driver.get(url)
 
@@ -36,17 +36,15 @@ def get_random_link():
         # แปลงข้อมูลที่ได้จาก API ให้เป็น JSON
         data = response.json()
 
-        # สร้าง list ของ comment
+        # สร้าง list ของ link
         links = [item['link'] for item in data['data']]
-
         return links
-
     else:
         print(f"Failed to fetch data. Status code: {response.status_code}")
         return None
 
-selected_link = get_random_link()
-    
+selected_links = get_random_link()
+
 def get_random_comment():
     api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
 
@@ -79,9 +77,12 @@ def like_post():
         print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
 
 def link_comment():
-    
-    post_url = selected_link
-    driver.get(random.choice(post_url))
+    if selected_links is None:
+        print("No links to comment on")
+        return
+
+    post_url = random.choice(selected_links)
+    driver.get(post_url)
     time.sleep(5)
 
     try:
@@ -129,13 +130,10 @@ def event_random():
 
     if random_event == "story":
         read_story()
-    
     elif random_event == "like_post":
         like_post()
-    
     elif random_event == "like_comment":
         link_comment()
-    
     elif random_event == "notify":
         notify()
 
