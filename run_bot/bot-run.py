@@ -1,12 +1,16 @@
+from typing import KeysView
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
-import random
 import time
+import random
 import requests
 
 # Options for ChromeDriver
@@ -22,6 +26,123 @@ url = 'https://www.facebook.com/'
 
 # Open the web page
 driver.get(url)
+
+#event reaction like post
+def love_post():
+    try:
+        # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
+        like_button = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Like']"))
+        )
+        actions = ActionChains(driver)
+        actions.move_to_element(like_button).perform()
+        time.sleep(2)  # รอให้ตัวเลือก reaction แสดงขึ้นมา
+
+        # รอให้ปุ่ม Love แสดงขึ้นมาและคลิก
+        love_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Love']"))
+        )
+        love_button.click()
+        print("Loved the post.")
+    except Exception as e:
+        print(f"Error loving post: {str(e)}")
+
+def care_post():
+    try:
+        # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
+        care_button = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Like']"))
+        )
+        actions = ActionChains(driver)
+        actions.move_to_element(care_button).perform()
+        time.sleep(2)  # รอให้ตัวเลือก reaction แสดงขึ้นมา
+
+        # รอให้ปุ่ม Love แสดงขึ้นมาและคลิก
+        care_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Case']"))
+        )
+        care_button.click()
+        print("Care the post.")
+    except Exception as e:
+        print(f"Error Caring post: {str(e)}")
+    
+def haha_post():
+    try:
+        # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
+        haha_button = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Like']"))
+        )
+        actions = ActionChains(driver)
+        actions.move_to_element(haha_button).perform()
+        time.sleep(2)  # รอให้ตัวเลือก reaction แสดงขึ้นมา
+
+        # รอให้ปุ่ม Love แสดงขึ้นมาและคลิก
+        haha_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Haha']"))
+        )
+        haha_button.click()
+        print("Haha the post.")
+    except Exception as e:
+        print(f"Error Haha post: {str(e)}")
+
+def sad_post():
+    try:
+        # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
+        sad_button = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Like']"))
+        )
+        actions = ActionChains(driver)
+        actions.move_to_element(sad_button).perform()
+        time.sleep(2)  # รอให้ตัวเลือก reaction แสดงขึ้นมา
+
+        # รอให้ปุ่ม Love แสดงขึ้นมาและคลิก
+        sad_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Sad']"))
+        )
+        sad_button.click()
+        print("Sad the post.")
+    except Exception as e:
+        print(f"Error Sad post: {str(e)}")
+
+def angry_post():
+    try:
+        # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
+        angry_button = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Like']"))
+        )
+        actions = ActionChains(driver)
+        actions.move_to_element(angry_button).perform()
+        time.sleep(2)  # รอให้ตัวเลือก reaction แสดงขึ้นมา
+
+        # รอให้ปุ่ม Love แสดงขึ้นมาและคลิก
+        angry_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Angry']"))
+        )
+        angry_button.click()
+        print("Angry the post.")
+    except Exception as e:
+        print(f"Error Angry post: {str(e)}")
+
+def wow_post():
+    try:
+        # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
+        wow_button = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Like']"))
+        )
+        actions = ActionChains(driver)
+        actions.move_to_element(wow_button).perform()
+        time.sleep(2)  # รอให้ตัวเลือก reaction แสดงขึ้นมา
+
+        # รอให้ปุ่ม Love แสดงขึ้นมาและคลิก
+        wow_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Wow']"))
+        )
+        wow_button.click()
+        print("Wow the post.")
+    except Exception as e:
+        print(f"Error Wow post: {str(e)}")
+
+## end function reaction post facebook
 
 def get_random_link():
     # URL ของ Google Apps Script API
@@ -172,7 +293,7 @@ def login_succ():
         },
         {
             'name': 'xs',
-            'value': '28%3AvxWS-P6HoYsIsQ%3A2%3A1719890496%3A-1%3A-1',
+            'value': '33%3AaVBRRv1jNW3PWg%3A2%3A1720006545%3A-1%3A-1%3A%3AAcVGhd-KB0FWp06htNDS_2ZAmiJ9r6uVf5nL9mwDsA',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -183,7 +304,7 @@ def login_succ():
         },
         {
             'name': 'datr',
-            'value': 'L3KDZhBP2TiorgX_frlkQbvx',
+            'value': 'kjeFZt8Vfe9Ho2HWq7J7xQQ7',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -194,7 +315,7 @@ def login_succ():
         },
         {
             'name': 'fr',
-            'value': '0TprfQir7mFxJRsv4.AWUzaEZ3Cj_mcixj-hKBc_gGinM.Bmg3I2..AAA.0.0.Bmg3I_.AWUID-x-DwU',
+            'value': '1N3nI12N982K3Rl6L.AWWw-43Fqg7NQclR1E7txco6Knc.BmhTeU..AAA.0.0.BmhTeU.AWUkB6e_7mQ',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
