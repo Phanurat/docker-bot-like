@@ -9,6 +9,12 @@
  - Window10
  - Linux Ununtu
 
+ ### Clone Project
+ ```sh
+git clone https://github.com/yourusername/docker-bot-like.git
+cd dokcer-bot-like
+```
+
  ### Install Linux Ubuntu 
  ```sh
  sudo apt-get install python3
