@@ -3,7 +3,7 @@ services:
   selenium:
     build: .
     volumes:
-      - .:/app
+      - .:/run_bot
     environment:
       - DISPLAY=:99
     shm_size: '2gb'

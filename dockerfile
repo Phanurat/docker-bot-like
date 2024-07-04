@@ -28,7 +28,7 @@ COPY requirements.txt .
 COPY run_bot/os-linux.py os-linux/
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+#  RUN pip install --no-cache-dir -r requirements.txt
 
 # Set environment variable for Python
 ENV PYTHONUNBUFFERED=1
