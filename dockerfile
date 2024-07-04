@@ -25,7 +25,7 @@ RUN wget https://chromedriver.storage.googleapis.com/$(wget -qO- https://chromed
 
 # Copy Python script and requirements file to the container
 COPY requirements.txt .
-COPY event-action/event-link-post.py event-action/
+COPY run_bot/os-linux.py os-linux/
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -34,4 +34,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 ENV PYTHONUNBUFFERED=1
 
 # Command to run the Python script
-CMD ["python", "./event-action/event-link-post.py"]
+CMD ["python", "./run_bot/os-linux.py"]
