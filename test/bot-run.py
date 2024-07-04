@@ -59,7 +59,7 @@ def care_post():
 
         # รอให้ปุ่ม Love แสดงขึ้นมาและคลิก
         care_button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Case']"))
+        EC.element_to_be_clickable((By.XPATH, "//div[@aria-label='Care']"))
         )
         care_button.click()
         print("Care the post.")
@@ -210,8 +210,9 @@ def like_post():
 
 def link_comment():
     #post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
-    post_url = selected_link
-    driver.get(random.choice(post_url))
+    post_url = random.choice(selected_link)
+    print(post_url)
+    driver.get(post_url)
     time.sleep(5)
 
     reaction_random = ["like", "love", "care", "haha", "wow", "sad", "angry", "not_reaction"]
@@ -234,7 +235,7 @@ def link_comment():
         angry_post()
 
     time.sleep(5)
-    
+
     try:
         xpaths = [
             '//div[@aria-label="Write a comment"]',
