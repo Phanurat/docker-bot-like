@@ -37,19 +37,19 @@ cd dokcer-bot-like
 ```
 
 ## Google Colab
-``sh
+```sh
 !pip install selenium
 !pip install webdriver-manager
-``
+```
 
 ###  Install the Chrome browser
-``sh
+```sh
 !apt-get update
 !apt-get install -y wget unzip
 !wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 !dpkg -i google-chrome-stable_current_amd64.deb
 !apt-get -f install -y
-``
+```
 ###  Install a compatible version of chromedriver
 ```sh
 !wget -N https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
@@ -63,5 +63,3 @@ cd dokcer-bot-like
 !dpkg -i google-chrome-stable_114.0.5735.90-1_amd64.deb
 !apt-get -f install -y
 ```
-
-
