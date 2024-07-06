@@ -5,8 +5,6 @@ url = 'https://script.google.com/macros/s/AKfycbzgQ6SmGCYyuX_elxSP1IETzfCjhQ-zVF
 
 # ส่ง GET request เพื่อดึงข้อมูล
 response = requests.get(url)
-
-# ตรวจสอบสถานะของ response
 if response.status_code == 200:
     data = response.json()
 
