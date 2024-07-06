@@ -2,7 +2,7 @@ import requests
 
 def get_random_comment():
     # URL ของ Google Apps Script API
-    api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
+    api_url = "https://script.google.com/macros/s/AKfycbyxlbV2VimWwSSBtPiAN0MfV9FDju6cwoOuQ3sM7mvzbnbTtTK7wyFdNPwNRJf1qoc4WQ/exec"
 
     # ส่งคำขอ GET ไปยัง API
     response = requests.get(api_url)
@@ -13,7 +13,7 @@ def get_random_comment():
         data = response.json()
 
         # สร้าง list ของ comment
-        comments = [item['comment'] for item in data['data']]
+        comments = [item['link'] for item in data['data']]
 
         return comments
 
