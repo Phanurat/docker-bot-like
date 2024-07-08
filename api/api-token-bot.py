@@ -38,6 +38,22 @@ else:
     print('เกิดข้อผิดพลาดในการเรียกใช้ API:', response.status_code)
 #Test data dic
 print(item['c_user'])
+c_user = item['c_user']
+
 print(item['xs'])
+xs = item['xs']
+
 print(item['datr'])
+datr = item['datr']
+
 print(item['fr'])
+fr = item['fr']
+
+def login(c_user, xs, datr, fr):
+    print("In fucntion :",c_user)
+    print("In fucntion :",xs)
+    print("In fucntion :",datr)
+    print("In fucntion :",fr)
+
+login(c_user, xs, datr, fr)
+    
