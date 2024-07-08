@@ -28,6 +28,11 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 url = 'https://www.facebook.com/'
 driver.get(url)
 
+def open_chat_meessage():
+    url_open_message = "https://www.facebook.com/messages/e2ee/t/"
+    driver.get(url_open_message)
+    time.sleep(4)
+
 #event reaction like post
 def love_post():
     try:
@@ -260,7 +265,7 @@ def read_story():
     # Add your read story functionality here
 
 def event_random():
-    list_event = ["story", "like_post", "like_comment", "notify"]
+    list_event = ["story", "like_post", "like_comment", "notify", "open_chat"]
     random_event = random.choice(list_event)
     print("Event Next ==>", random_event)
 
@@ -275,6 +280,9 @@ def event_random():
     
     elif random_event == "notify":
         notify()
+
+    elif random_event == "open_chat":
+        open_chat_meessage()
 
 def timeline_scroll():
     scroll_random = random.uniform(4, 6)
