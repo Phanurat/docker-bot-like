@@ -25,6 +25,8 @@ chrome_options.add_argument('--ignore-certificate-errors')
 service = Service('/usr/local/bin/chromedriver')
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
+target_b_id = 'b00003'
+
 url = 'https://www.facebook.com/'
 driver.get(url)
 
@@ -291,12 +293,46 @@ def timeline_scroll():
         driver.execute_script("window.scrollBy(0, 180);")
         time.sleep(2)
 
-def login_succ():
+def login_succ(target_b_id):
     # List of cookies you provided
+
+    bot_url = 'https://script.google.com/macros/s/AKfycbxYQWVejdmhc3P99N0-qSgHDfcLX3PI1sQFJd2txN-eV0rKg0NqzF7tPBYjk1sGeAOz/exec'
+
+    response = requests.get(bot_url)
+    if response.status_code == 200:
+        data = response.json
+        try:
+            selected_data = []
+
+            for item in data['data']:
+                if item['b_id'] == target_b_id:
+                    selected_data.append({
+                        'b_id': item['b_id'],
+                        'c_user': item['c_user'],
+                        'xs': item['xs'],
+                        'datr': item['datr'],
+                        'fr': item['fr']
+                    })
+            if not selected_data:
+                print(f"No data found for b_id = {target_b_id}")
+                exit()
+
+            item = selected_data[0]
+            c_user = item['c_user']
+            xs = item['xs']
+            datr = item['datr']
+            fr = item['fr']
+        
+        except KeyError as e:
+            exit()
+    else:
+        print("Error call back API", response.status_code)
+        exit()
+
     cookies_list = [
         {
             'name': 'c_user',
-            'value': '61551780956965',
+            'value': str(c_user),
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -307,7 +343,7 @@ def login_succ():
         },
         {
             'name': 'xs',
-            'value': '28%3AvxWS-P6HoYsIsQ%3A2%3A1719890496%3A-1%3A-1',
+            'value': str(xs),
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -318,7 +354,7 @@ def login_succ():
         },
         {
             'name': 'datr',
-            'value': 'L3KDZhBP2TiorgX_frlkQbvx',
+            'value': str(datr),
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -329,7 +365,7 @@ def login_succ():
         },
         {
             'name': 'fr',
-            'value': '0TprfQir7mFxJRsv4.AWUzaEZ3Cj_mcixj-hKBc_gGinM.Bmg3I2..AAA.0.0.Bmg3I_.AWUID-x-DwU',
+            'value': str(fr),
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -366,4 +402,4 @@ def login_succ():
     # ปิดเบราว์เซอร์
     driver.quit()
 
-login_succ()
+login_succ(target_b_id)
