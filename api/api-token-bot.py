@@ -36,3 +36,8 @@ if response.status_code == 200:
 
 else:
     print('เกิดข้อผิดพลาดในการเรียกใช้ API:', response.status_code)
+#Test data dic
+print(item['c_user'])
+print(item['xs'])
+print(item['datr'])
+print(item['fr'])
