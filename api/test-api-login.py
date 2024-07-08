@@ -135,9 +135,20 @@ if "Facebook" in driver.title:
     print("Login successful")
     # URL of the Facebook profile page you want to access
     url = 'https://www.facebook.com/phanurat.jakkranukoolkit'
-
-    # Open the web page
     driver.get(url)
+
+    # รอให้หน้าโปรไฟล์โหลด
+    time.sleep(5)
+
+    # อ่านเนื้อหาโพสต์และลิงก์โพสต์
+    posts = driver.find_elements(By.XPATH, '//div[@data-ad-comet-preview="message"]')
+    links = driver.find_elements(By.XPATH, '//div[@data-ad-comet-preview="message"]/ancestor::div[contains(@aria-posinset, "")]//a[contains(@href, "/posts/") or contains(@href, "/permalink/")]')
+
+    # อ่านเนื้อหาโพสต์และลิงก์โพสต์
+    for post, link in zip(posts, links):
+        print("Post Content: ", post.text)
+        print("Post Link: ", link.get_attribute('href'))
+        
     time.sleep(5)
 else:
     print("Login failed")
