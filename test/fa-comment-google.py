@@ -17,14 +17,14 @@ chrome_options.add_argument("--disable-notifications")
 # Initialize WebDriver using WebDriverManager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-# URL ของหน้า Facebook ที่ต้องการเข้าถึง
+# URL of the Facebook page you want to access
 url = 'https://www.facebook.com/'
 
-# เปิดหน้าเว็บ
+# Open the web page
 driver.get(url)
 
 def get_random_comment():
-    #URL Google Apps Script
+    # URL of Google Apps Script API
     api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
 
     response = requests.get(api_url)
@@ -34,16 +34,15 @@ def get_random_comment():
         comments = [item['comment'] for item in data['data']]
 
         selected_comment = random.choice(comments)
-        #print(selected_comment)
         return selected_comment
     
     else:
         print(f"Error Status code: {response.status_code}")
         return None
+
 selected_comment = get_random_comment()
 
-
-# รายการคุกกี้ที่คุณให้มา
+# List of cookies you provided
 cookies_list = [
     {
         'name': 'c_user',
@@ -58,7 +57,7 @@ cookies_list = [
     },
     {
         'name': 'xs',
-        'value': '28%3AvxWS-P6HoYsIsQ%3A2%3A1719890496%3A-1%3A-1',
+        'value': '13%3AF_hwo-RDE3f17A%3A2%3A1720507723%3A-1%3A-1%3A%3AAcWoZWqhPYZifyy-wKqyF7bRknYAmZYMXDrvQXIEJg',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -69,7 +68,7 @@ cookies_list = [
     },
     {
         'name': 'datr',
-        'value': 'L3KDZhBP2TiorgX_frlkQbvx',
+        'value': 'Tt2MZqlcsW5DdHzwIMHV6aR2',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -80,7 +79,7 @@ cookies_list = [
     },
     {
         'name': 'fr',
-        'value': '0TprfQir7mFxJRsv4.AWUzaEZ3Cj_mcixj-hKBc_gGinM.Bmg3I2..AAA.0.0.Bmg3I_.AWUID-x-DwU',
+        'value': '10NpXlDmIlfZAIY4B.AWW1OCuxDctfVNNIXA5rCKn9_F8.BmjOAs..AAA.0.0.BmjOEC.AWXKxjDp0bk',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -91,60 +90,46 @@ cookies_list = [
     }
 ]
 
-# เพิ่มคุกกี้ในเบราว์เซอร์
+# Add cookies to the browser
 for cookie in cookies_list:
-    # Convert expires to int if it is not None
     if cookie['expires']:
         cookie['expires'] = int(cookie['expires'])
     driver.add_cookie(cookie)
 
-# รีเฟรชหน้าเว็บเพื่อใช้คุกกี้
+# Refresh the web page to use cookies
 driver.refresh()
 
-# รอเวลาให้หน้าเว็บโหลดเสร็จ
+# Wait for the web page to load completely
 time.sleep(5)
 
-# ตรวจสอบสถานะการเข้าสู่ระบบ
+# Check login status
 if "Facebook" in driver.title:
-    print("เข้าสู่ระบบสำเร็จ")
-    
-    # ไปที่โพสต์ที่ต้องการคอมเมนต์
-    post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
-    driver.get(post_url)
-    time.sleep(5)
-    
+    print("Login successful")
+
     try:
-        # ลองใช้ XPath ต่างๆ เพื่อหาช่องคอมเมนต์
-        xpaths = [
-            '//div[@aria-label="Write a comment"]',
-            '//div[@aria-label="Write a comment..."]',
-            '//div[contains(@aria-label, "Write a comment")]',
-            '//div[@role="textbox"]',
-        ]
-        comment_input = None
-        for xpath in xpaths:
-            try:
-                comment_input = driver.find_element(By.XPATH, xpath)
-                if comment_input:
-                    break
-            except:
-                continue
-        
-        if not comment_input:
-            raise Exception("ไม่สามารถหาช่องคอมเมนต์ได้")
-        
+        # Go to the post where you want to comment
+        post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
+        driver.get(post_url)
+        time.sleep(5)
+
+        # Find and click on the comment box using a more reliable XPath
+        comment_input = driver.find_element(By.XPATH, '//div[@role="textbox"][@contenteditable="true"]')
         comment_input.click()
         time.sleep(2)
 
-        # พิมพ์คอมเมนต์
-        comment_text = selected_comment
-        comment_input.send_keys(comment_text)
+        # Type and post comment character by character
+        for char in selected_comment:
+            comment_input.send_keys(char)
+            time.sleep(0.5)  # Adjust as needed for typing speed
         comment_input.send_keys(Keys.ENTER)
-        print(f"เพิ่มคอมเมนต์ '{comment_text}' สำเร็จ")
-    except Exception as e:
-        print(f"ไม่สามารถเพิ่มคอมเมนต์ได้: {str(e)}")
-else:
-    print("การเข้าสู่ระบบล้มเหลว")
+        print(f"Successfully commented: '{selected_comment}'")
 
-# ปิดเบราว์เซอร์
+    except Exception as e:
+        print(f"Error commenting on post: {str(e)}")
+
+
+else:
+    print("Login failed")
+
+# Close the browser
 driver.quit()
