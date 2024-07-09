@@ -64,22 +64,22 @@ cd dokcer-bot-like
 !apt-get -f install -y
 ```
 
-### USE COLAB 
+# USE COLAB 
 ## Run file /run_bot/main-colab.ipynb
 
-#Step 1: Install and update necessary package
+###Step 1: Install and update necessary package
 ```sh
 !apt-get update # Update package lists
 !apt-get install -y wget unzip # Install wget and unzi
 ```
-#Step 2: Install Google Chrome
+###Step 2: Install Google Chrome
 ```sh
 !wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb # Download the Chrome .deb package
 !dpkg -i google-chrome-stable_current_amd64.deb # Install the Chrome .deb package
 !apt-get -f install -y # Fix any dependency issue
 ```
 
-#Step 3: Install Chromedriver
+###Step 3: Install Chromedriver
 ```sh
 !wget -N https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip # Download the Chromedriver zip
 !unzip chromedriver_linux64.zip # Unzip the Chromedriver
@@ -87,7 +87,7 @@ cd dokcer-bot-like
 !mv -f chromedriver /usr/local/bin/chromedriver # Move Chromedriver to /usr/local/bin
 ```
 
-# Step 4: Install Selenium and webdriver-manager
+###Step 4: Install Selenium and webdriver-manager
 ```sh
 !pip install selenium webdriver-manager # Install Selenium and webdriver-manager
 ```
