@@ -120,7 +120,7 @@ if "Facebook" in driver.title:
         # Type and post comment character by character
         for char in selected_comment:
             comment_input.send_keys(char)
-            time.sleep(0.5)  # Adjust as needed for typing speed
+            time.sleep(0.15)  # Adjust as needed for typing speed
         comment_input.send_keys(Keys.ENTER)
         print(f"Successfully commented: '{selected_comment}'")
 

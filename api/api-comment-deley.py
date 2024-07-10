@@ -24,7 +24,7 @@ def get_random_comment():
         print("Selected comment:", end="")
         for char in selected_comment:
             print(char, end="", flush=True)
-            time.sleep(0.5)
+            time.sleep(0.15)  # Adjust as needed for typing speed
         print()  # สร้างบรรทัดใหม่หลังจากการแสดงผล
 
         return selected_comment
