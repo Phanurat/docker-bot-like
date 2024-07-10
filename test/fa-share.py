@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
@@ -28,7 +29,7 @@ def login_and_post():
         cookies_list = [
             {
                 'name': 'c_user',
-                'value': '61551780956965',
+                'value': '61551780956965',  # Replace with your c_user cookie value
                 'domain': '.facebook.com',
                 'path': '/',
                 'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -39,7 +40,7 @@ def login_and_post():
             },
             {
                 'name': 'xs',
-                'value': '13%3AF_hwo-RDE3f17A%3A2%3A1720507723%3A-1%3A-1%3A%3AAcVC8c8tbR4-LA4Vv3wp19DIYUvaKRzszfWCM1MJ0Q',
+                'value': '13%3AF_hwo-RDE3f17A%3A2%3A1720507723%3A-1%3A-1%3A%3AAcVC8c8tbR4-LA4Vv3wp19DIYUvaKRzszfWCM1MJ0Q',  # Replace with your xs cookie value
                 'domain': '.facebook.com',
                 'path': '/',
                 'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -50,7 +51,7 @@ def login_and_post():
             },
             {
                 'name': 'datr',
-                'value': 'Tt2MZqlcsW5DdHzwIMHV6aR2',
+                'value': 'Tt2MZqlcsW5DdHzwIMHV6aR2',  # Replace with your datr cookie value
                 'domain': '.facebook.com',
                 'path': '/',
                 'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -61,7 +62,7 @@ def login_and_post():
             },
             {
                 'name': 'fr',
-                'value': '1j39NyLJ2YqgvD8j2.AWWnw_G0lVxPG8Ca3k6vMO7WloE.BmjhDl..AAA.0.0.BmjhDl.AWVH8LHQaTI',
+                'value': '1j39NyLJ2YqgvD8j2.AWWnw_G0lVxPG8Ca3k6vMO7WloE.BmjhDl..AAA.0.0.BmjhDl.AWVH8LHQaTI',  # Replace with your fr cookie value
                 'domain': '.facebook.com',
                 'path': '/',
                 'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -90,22 +91,27 @@ def login_and_post():
         print("Logged in successfully")
 
         # Navigate to the Facebook profile page (you may adjust the URL as needed)
-        driver.get("https://www.facebook.com")
+        driver.get("https://www.facebook.com/profile.php")
 
-        # Wait for the profile page to load
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[@data-contents='true']")))
+        try:
+            post = "Test Bot Posts"
 
-        # Find the post field and input your message
-        post_message = "Hello, this is a test post using Selenium WebDriver!"
-        post_field = driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[4]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]")
-        post_field.send_keys(post_message)
+            # Find the post input box
+            post_input = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[@data-contents='true']")))
+            post_input.click()
 
-        # Click on the Post button
-        post_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/form[1]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]"))
-        )
-        post_button.click()
-        print("Successfully Posted On Facebook")
+            # Input the post text
+            post_input.send_keys(post)
+            time.sleep(2)
+
+            # Click the post button
+            post_btn = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[@data-testid='react-composer-post-button']")))
+            post_btn.click()
+
+            print("Posted successfully")
+
+        except Exception as e:
+            print(f"Error posting: {str(e)}")
 
     except Exception as e:
         print(f"An error occurred: {str(e)}")
