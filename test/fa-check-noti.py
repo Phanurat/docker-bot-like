@@ -88,15 +88,15 @@ if "Facebook" in driver.title:
     print("Login successful")
 
     def check_notifications():
-        # Check for the notifications indicator (red dot)
         try:
-            new_notification = driver.find_element(By.XPATH, '//div[@aria-label="Notifications"]/span[contains(@class, "jewelCount") and contains(@class, "jewelCountRed")]')
+            # Check for the notifications indicator using XPath
+            new_notification = driver.find_element(By.XPATH, '//div[contains(@aria-label, "Notifications") and contains(@aria-label, "unread")]')
             if new_notification.is_displayed():
                 print("You have new notifications!")
             else:
                 print("No new notifications.")
-        except:
-            print("No new notifications.")
+        except Exception as e:
+            print(f"No new notifications. Error: {e}")
     
     check_notifications()
 else:
