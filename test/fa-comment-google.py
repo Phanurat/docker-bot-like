@@ -57,7 +57,7 @@ cookies_list = [
     },
     {
         'name': 'xs',
-        'value': '13%3AF_hwo-RDE3f17A%3A2%3A1720507723%3A-1%3A-1%3A%3AAcWoZWqhPYZifyy-wKqyF7bRknYAmZYMXDrvQXIEJg',
+        'value': '45%3A-6ZMkdlT_BAOEA%3A2%3A1720756466%3A-1%3A-1%3A%3AAcXfBx_8Csqrpu-SwL5rr5C_5I-7r-PcO4hEs2AtuQ',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -68,7 +68,7 @@ cookies_list = [
     },
     {
         'name': 'datr',
-        'value': 'Tt2MZqlcsW5DdHzwIMHV6aR2',
+        'value': '__GMZCgwVF5BbyvAtfJojQwg',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -79,7 +79,7 @@ cookies_list = [
     },
     {
         'name': 'fr',
-        'value': '10NpXlDmIlfZAIY4B.AWW1OCuxDctfVNNIXA5rCKn9_F8.BmjOAs..AAA.0.0.BmjOEC.AWXKxjDp0bk',
+        'value': '0n3O5VVBilRTVmWw2.AWWz9H5S-PRVlk8QOp3Vetf2BVs.BmkKjx..AAA.0.0.BmkKj1.AWUBDBRN0kI',
         'domain': '.facebook.com',
         'path': '/',
         'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -126,7 +126,6 @@ if "Facebook" in driver.title:
 
     except Exception as e:
         print(f"Error commenting on post: {str(e)}")
-
 
 else:
     print("Login failed")
