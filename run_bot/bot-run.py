@@ -22,7 +22,7 @@ chrome_options.add_argument("--disable-notifications")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 # b_id bot
-target_b_id = 'b00006'
+target_b_id = 'b00004'
 
 # URL ของหน้า Facebook ที่ต้องการเข้าถึง
 url = 'https://www.facebook.com/'
