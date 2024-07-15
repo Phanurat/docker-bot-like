@@ -34,23 +34,16 @@ def check_notifications():
     try:
         new_notification = driver.find_element(By.XPATH, '//div[contains(@aria-label, "Notifications") and contains(@aria-label, "unread")]')
         if new_notification.is_displayed():
+            print("You have new notifications!")
             driver.get('https://www.facebook.com/notifications')
             time.sleep(5)
-            #pass
+    
         else:
-            pass
-        
+            print("No new notifications.")
+    
     except Exception as e:
-        #print(f"No new notifications. Error: {e}")
-        print(f"No new notifications. Error: {e}")
-        scroll_random = random.uniform(4, 6)
-        print("Timeline Scroll Monitor!!")
-            
-        for _ in range(int(scroll_random)):
-            driver.get('https://www.facebook.com')
-            driver.execute_script("window.scrollBy(0, 180);")
-            time.sleep(2)
-
+        print("No new notifications.")
+        
 def open_chat_meessage():
     url_open_message = "https://www.facebook.com/messages/e2ee/t/"
     driver.get(url_open_message)
@@ -318,6 +311,7 @@ def read_story():
 
 def event_random():
     list_event = ["story", "like_post", "like_comment", "notify", "open_chat", "time_line"]
+    #list_event = ["notify", "notify", "notify", "notify", "notify", "notify"]
     random_event = random.choice(list_event)
     print("Event Next ==>", random_event)
 
@@ -342,7 +336,7 @@ def event_random():
         print("Timeline Scroll Monitor!!")
         for _ in range(int(scroll_random)):
             driver.execute_script("window.scrollBy(0, 180);")
-            time.sleep(15)
+            time.sleep(2)
 
 def timeline_scroll():
     scroll_random = random.uniform(4, 6)
