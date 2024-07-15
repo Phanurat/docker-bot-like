@@ -22,7 +22,7 @@ chrome_options.add_argument("--disable-notifications")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 # b_id bot
-target_b_id = 'b00004'
+target_b_id = 'b00007'
 
 # URL ของหน้า Facebook ที่ต้องการเข้าถึง
 url = 'https://www.facebook.com/'
@@ -207,10 +207,22 @@ def get_random_comment():
 selected_comment = get_random_comment() 
 
 def notify():
-    print("Opening Notifications!")
-    driver.get('https://www.facebook.com/notifications')
-    time.sleep(5)
-
+    print("Check Notifications!")
+    #driver.get('https://www.facebook.com/notifications')
+    #time.sleep(5)
+    try:
+        new_notification = driver.find_element(By.XPATH, '//div[contains(@aria-label, "Notifications") and contains(@aria-label, "unread")]')
+        if new_notification.is_displayed():
+            print("You have new notifications!")
+            driver.get('https://www.facebook.com/notifications')
+            time.sleep(5)
+        else:
+            print("No new notifications.")
+    
+    except Exception as e:
+        print("No new notifications.")
+        return
+        
 def like_post():
     print("Trying to like a post...")
     driver.get('https://www.facebook.com/')
@@ -286,6 +298,7 @@ def link_comment():
 
     except Exception as e:
         print(f"Can't Comment: {str(e)}")
+        return
     
     print("Comment it Work!")
     # Add your comment functionality here
