@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from datetime import datetime
 import time
+import random
 
 # Options for ChromeDriver
 chrome_options = Options()
@@ -83,6 +84,10 @@ driver.refresh()
 # Wait for the web page to load completely
 time.sleep(5)
 
+def check():
+    print("don't have notify")
+    exit()
+
 # Check login status
 if "Facebook" in driver.title:
     print("Login successful")
@@ -91,13 +96,20 @@ if "Facebook" in driver.title:
         try:
             # Check for the notifications indicator using XPath
             new_notification = driver.find_element(By.XPATH, '//div[contains(@aria-label, "Notifications") and contains(@aria-label, "unread")]')
+            #new_notification = driver.find_element(By.XPATH, '//div[contains(@aria-label, "Notifications") and contains(@aria-label, "unread")]')
             if new_notification.is_displayed():
                 print("You have new notifications!")
             else:
                 print("No new notifications.")
         except Exception as e:
-            print(f"No new notifications. Error: {e}")
-    
+            #print(f"No new notifications. Error: {e}")
+            print("No new notifications.")
+            scroll_random = random.uniform(4, 6)
+            print("Timeline Scroll Monitor!!")
+            
+            driver.execute_script("window.scrollBy(0, 180);")
+            time.sleep(15)
+
     check_notifications()
 else:
     print("Login failed")

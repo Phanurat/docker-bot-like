@@ -22,13 +22,34 @@ chrome_options.add_argument("--disable-notifications")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 # b_id bot
-target_b_id = 'b00006'
+target_b_id = 'b00007'
 
 # URL ของหน้า Facebook ที่ต้องการเข้าถึง
 url = 'https://www.facebook.com/'
 
 # Open the web page
 driver.get(url)
+
+def check_notifications():
+    try:
+        new_notification = driver.find_element(By.XPATH, '//div[contains(@aria-label, "Notifications") and contains(@aria-label, "unread")]')
+        if new_notification.is_displayed():
+            driver.get('https://www.facebook.com/notifications')
+            time.sleep(5)
+            #pass
+        else:
+            pass
+        
+    except Exception as e:
+        #print(f"No new notifications. Error: {e}")
+        print(f"No new notifications. Error: {e}")
+        scroll_random = random.uniform(4, 6)
+        print("Timeline Scroll Monitor!!")
+            
+        for _ in range(int(scroll_random)):
+            driver.get('https://www.facebook.com')
+            driver.execute_script("window.scrollBy(0, 180);")
+            time.sleep(2)
 
 def open_chat_meessage():
     url_open_message = "https://www.facebook.com/messages/e2ee/t/"
@@ -208,8 +229,9 @@ selected_comment = get_random_comment()
 
 def notify():
     print("Opening Notifications!")
-    driver.get('https://www.facebook.com/notifications')
-    time.sleep(5)
+    #driver.get('https://www.facebook.com/notifications')
+    #time.sleep(5)
+    check_notifications()
 
 def like_post():
     print("Trying to like a post...")
