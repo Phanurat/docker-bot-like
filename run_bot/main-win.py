@@ -13,117 +13,32 @@ import time
 import random
 import requests
 
+# Options for ChromeDriver
+chrome_options = Options()
+chrome_options.add_argument("--start-maximized")
+chrome_options.add_argument("--disable-notifications")
+
+# Initialize WebDriver using WebDriverManager
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+
+# b_id bot
 target_b_id = 'b00007'
 
-def break_automate():
-    time_random = random.randint(5, 10)
-    print("Break time:", time_random, "seconds")
-    time.sleep(time_random)
+# URL ของหน้า Facebook ที่ต้องการเข้าถึง
+url = 'https://www.facebook.com/'
 
-def get_driver():
-    # Options for ChromeDriver
-    chrome_options = Options()
-    chrome_options.add_argument("--start-maximized")
-    chrome_options.add_argument("--disable-notifications")
+# Open the web page
+driver.get(url)
 
-    # Initialize WebDriver using WebDriverManager
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-    return driver
+def open_chat_meessage():
+    url_open_message = "https://www.facebook.com/messages/e2ee/t/"
+    driver.get(url_open_message)
+    time.sleep(4)
+    print("Opened chat message.")
 
-def check_login(driver):
-    url = 'https://script.google.com/macros/s/AKfycbxYQWVejdmhc3P99N0-qSgHDfcLX3PI1sQFJd2txN-eV0rKg0NqzF7tPBYjk1sGeAOz/exec'
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        data = response.json()
-        try:
-            selected_data = [item for item in data['data'] if item['b_id'] == target_b_id]
-
-            if not selected_data:
-                print(f"No data found for b_id = {target_b_id}")
-                return False
-
-            item = selected_data[0]
-            c_user = item['c_user']
-            xs = item['xs']
-            datr = item['datr']
-            fr = item['fr']
-
-        except KeyError as e:
-            print(f'Error extracting data: {e}')
-            return False
-
-    else:
-        print('Error calling API:', response.status_code)
-        return False
-
-    url = 'https://www.facebook.com'
-    driver.get(url)
-
-    cookies_list = [
-        {
-            'name': 'c_user',
-            'value': str(c_user),
-            'domain': '.facebook.com',
-            'path': '/',
-            'expires': int(datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp()),
-            'httpOnly': False,
-            'secure': True,
-            'session': False,
-            'sameSite': 'None'
-        },
-        {
-            'name': 'xs',
-            'value': str(xs),
-            'domain': '.facebook.com',
-            'path': '/',
-            'expires': int(datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp()),
-            'httpOnly': True,
-            'secure': True,
-            'session': False,
-            'sameSite': 'None'
-        },
-        {
-            'name': 'datr',
-            'value': str(datr),
-            'domain': '.facebook.com',
-            'path': '/',
-            'expires': int(datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp()),
-            'httpOnly': True,
-            'secure': True,
-            'session': False,
-            'sameSite': 'None'
-        },
-        {
-            'name': 'fr',
-            'value': str(fr),
-            'domain': '.facebook.com',
-            'path': '/',
-            'expires': int(datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp()),
-            'httpOnly': True,
-            'secure': True,
-            'session': False,
-            'sameSite': 'None'
-        }
-    ]
-
-    for cookie in cookies_list:
-        if cookie['value']:
-            driver.add_cookie(cookie)
-
-    driver.refresh()
-    time.sleep(5)
-
-    if "Facebook" in driver.title:
-        print("Login successful")
-        return True
-    else:
-        print("Login failed")
-        return False
-
+# Event reaction like post
 def love_post():
     try:
-        driver = get_driver()
         print("Trying to love a post...")
         # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
         like_button = WebDriverWait(driver, 10).until(
@@ -144,7 +59,6 @@ def love_post():
 
 def care_post():
     try:
-        driver = get_driver()
         print("Trying to care a post...")
         # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
         care_button = WebDriverWait(driver, 10).until(
@@ -165,7 +79,6 @@ def care_post():
 
 def haha_post():
     try:
-        driver = get_driver()
         print("Trying to haha a post...")
         # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
         haha_button = WebDriverWait(driver, 10).until(
@@ -186,7 +99,6 @@ def haha_post():
 
 def sad_post():
     try:
-        driver = get_driver()
         print("Trying to sad a post...")
         # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
         sad_button = WebDriverWait(driver, 10).until(
@@ -207,7 +119,6 @@ def sad_post():
 
 def angry_post():
     try:
-        driver = get_driver()
         print("Trying to angry a post...")
         # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
         angry_button = WebDriverWait(driver, 10).until(
@@ -228,7 +139,6 @@ def angry_post():
 
 def wow_post():
     try:
-        driver = get_driver()
         print("Trying to wow a post...")
         # เลื่อนเมาส์ไปที่ปุ่มไลค์เพื่อให้ตัวเลือก reaction แสดงขึ้นมา
         wow_button = WebDriverWait(driver, 10).until(
@@ -246,6 +156,8 @@ def wow_post():
         print("Wow the post.")
     except Exception as e:
         print(f"Error wow post: {str(e)}")
+
+## end function reaction post facebook
 
 def get_random_link():
     # URL ของ Google Apps Script API
@@ -295,7 +207,6 @@ def get_random_comment():
 selected_comment = get_random_comment() 
 
 def notify():
-    driver = get_driver()
     print("Check Notifications!")
     #driver.get('https://www.facebook.com/notifications')
     #time.sleep(5)
@@ -311,9 +222,8 @@ def notify():
     except Exception as e:
         print("No new notifications.")
         return
-
+        
 def like_post():
-    driver = get_driver()
     print("Trying to like a post...")
     driver.get('https://www.facebook.com/')
 
@@ -328,7 +238,6 @@ def like_post():
         print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
 
 def link_comment():
-    driver = get_driver()
     post_url = random.choice(selected_link)
     driver.get(post_url)
     time.sleep(5)
@@ -399,7 +308,6 @@ def read_story():
     # Add your read story functionality here
 
 def event_random():
-    driver = get_driver()
     list_event = ["story", "like_post", "like_comment", "notify", "open_chat", "time_line"]
     random_event = random.choice(list_event)
     print("Event Next ==>", random_event)
@@ -428,31 +336,132 @@ def event_random():
             time.sleep(15)
 
 def timeline_scroll():
-    driver = get_driver()
     scroll_random = random.uniform(4, 6)
     print("Timeline Scroll Monitor!!")
     for _ in range(int(scroll_random)):
         driver.execute_script("window.scrollBy(0, 180);")
         time.sleep(2)
 
-def main():
-    driver = get_driver()
-    if check_login(driver):
-        count = 1
+def break_automate():
+    break_time = random.randint(5,10)
+    print("Range is = ", break_time, "sec")
+    time.sleep(break_time)
+    driver.quit()
+    exit()
+
+def login_succ(target_b_id):
+    # List of cookies you provided
+    
+    bot_url = 'https://script.google.com/macros/s/AKfycbxYQWVejdmhc3P99N0-qSgHDfcLX3PI1sQFJd2txN-eV0rKg0NqzF7tPBYjk1sGeAOz/exec'
+
+    response = requests.get(bot_url)
+    if response.status_code == 200:
+        data = response.json()
+        try:
+            selected_data = []
+            
+            for item in data['data']:
+                if item['b_id'] == target_b_id:
+                    selected_data.append({
+                        'b_id': item['b_id'],
+                        'c_user': item['c_user'],
+                        'xs': item['xs'],
+                        'datr': item['datr'],
+                        'fr': item['fr']
+                    })
+            if not selected_data:
+                print(f"No data found for b_id = {target_b_id}")
+                exit()
+            item = selected_data[0]
+            c_user = item['c_user']
+            xs = item['xs']
+            datr = item['datr']
+            fr = item['fr']
+
+        except KeyError as e:
+            exit()
+    else:
+        print("Error call back API:", response.status_code)
+        exit()
+
+    cookies_list = [
+        {
+            'name': 'c_user',
+            'value': str(c_user),
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': False,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        },
+        {
+            'name': 'xs',
+            'value': str(xs),
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': True,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        },
+        {
+            'name': 'datr',
+            'value': str(datr),
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': True,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        },
+        {
+            'name': 'fr',
+            'value': str(fr),
+            'domain': '.facebook.com',
+            'path': '/',
+            'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
+            'httpOnly': True,
+            'secure': True,
+            'session': False,
+            'sameSite': 'None'
+        }
+    ]
+
+    # Add cookies to the browser
+    for cookie in cookies_list:
+        # Convert expires to int if it is not None
+        if cookie['expires']:
+            cookie['expires'] = int(cookie['expires'])
+        driver.add_cookie(cookie)
+
+    # Refresh the web page to use cookies
+    driver.refresh()
+
+    # Wait for the web page to load completely
+    time.sleep(5)
+
+    # Check login status
+    if "Facebook" in driver.title:
+        print("เข้าสู่ระบบสำเร็จ")
         while True:
-            work_time = random.randint(5, 10)
-            print("Automation time:", work_time, "seconds")
-            event_random()
-            timeline_scroll()
-            time.sleep(work_time)  # Wait for random time
+            #event_random()
+            #timeline_scroll()
+            #time.sleep(5)
 
-            count += 1
-            if count % 10 == 0:
-                driver.quit()  # Quit the current driver
-                break_automate()
-                driver = get_driver()  # Restart the driver
-                check_login(driver)
-            time.sleep(1)
+            range_time = 60
+            for _ in range(range_time):
+                event_random()
+                time.sleep(5)
 
-if __name__ == "__main__":
-    main()
+            break_automate()
+    else:
+        print("การเข้าสู่ระบบล้มเหลว")
+
+    # ปิดเบราว์เซอร์
+    driver.quit()
+
+login_succ(target_b_id)
