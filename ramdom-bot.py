@@ -1,98 +1,45 @@
-###############################################################################################################
-###############################################################################################################
-
-import random
 import time
-
-###############################################################################################################
-#--------------------- Check login cookie chrome browser -------------------------------#
-###############################################################################################################
-
-#val = int(input("1 login or 0 not login : "))
-val = 1
-
-###############################################################################################################
-#--------------------- End Check login cookie chrome browser ---------------------------#
-###############################################################################################################
-
-
-
-###############################################################################################################
-#--------------------- The Event To Random action on timeline ---------------------------#
-###############################################################################################################
-
-def notify():
-    print("Read Notify Done")
-
-def like_post():
-    list_emoji = ["Like", "Love", "MiniLove", "Haha", "Sad", "Hate"]
-    random_emoji = random.choice(list_emoji)
-    print("Emoje Post ==> ", random_emoji)
-    return random_emoji
-
-def like_comment():
-    print("Comment ==> the comment for post to and the comments")
-    like_post()
-
-def read_story():
-    print("Read Story")
-    like_post()
-
-###############################################################################################################
-#--------------------- End The Event To Random action on timeline ---------------------------#
-###############################################################################################################
-
-
-###############################################################################################################
-###############################################################################################################
+import random
 
 def event_random():
-    list_event = ["story", "like_post", "like_comment", "notify"]
+    print("Event Random")
+    list_event = ["story", "like_post", "like_comment", "notify", "open_chat", "time_line"]
+    
     random_event = random.choice(list_event)
-    print("Event Next ==> ", random_event)
-
+    
     if random_event == "story":
-        read_story()
-
+        print("Reading Story")
     elif random_event == "like_post":
-        like_post()
-
+        print("Like Post Successfully")
     elif random_event == "like_comment":
-        like_comment()
-
+        print("Like Post and Comment Post Successfully")
     elif random_event == "notify":
-        notify()
+        print("Opening Notify")
+    elif random_event == "open_chat":
+        print("Opening Chat")
+    elif random_event == "time_line":
+        print("Scroll Time Line")
+    
+    print("---------------3 sec-----------------")
+    time.sleep(3)
 
-    return random_event
+def break_time():
+    break_duration = random.randint(5, 10)
+    print(f"Time break is {break_duration} sec")
+    print("--------------------------------")
+    time.sleep(break_duration)
 
-###############################################################################################################
-###############################################################################################################
+def main():
+    print("Start Bot Running!!")
 
+    while True:
+        print("Loop Run")
+        start_time = time.time()
 
-def timeline_scroll():
-    scroll_random = random.uniform(6, 10)
-    print("Scroll ==> ", scroll_random)
-    number = 0
-    for i in range(1, int(scroll_random)):
-        time.sleep(2)
-        number += 1
-        print(f"Post : {number}")
+        while time.time() - start_time < 30:
+            event_random()
 
-def login_succ(val):
-    if val == 1:
-        print("Login Successfully!")
+        break_time()
 
-        while True:
-            timeline_scroll()
-            random_event = event_random()  # เรียกใช้ฟังก์ชัน event_random เพื่อรับค่า random_event
-            print("return from function : ", random_event)
-    else:
-        print("Cannot Login!")
-
-###############################################################################################################
-###############################################################################################################
-
-login_succ(val)
-
-###############################################################################################################
-###############################################################################################################
+if __name__ == "__main__":
+    main()
