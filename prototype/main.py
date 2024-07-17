@@ -13,30 +13,23 @@ import time
 import random
 import requests
 
-# Options for ChromeDriver
 chrome_options = Options()
 chrome_options.add_argument("--start-maximized")
 chrome_options.add_argument("--disable-notifications")
 
-# Initialize WebDriver using WebDriverManager
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-# b_id bot
+#Input ID bot from API google sheet
 target_b_id = 'b00008'
 
-# URL ของหน้า Facebook ที่ต้องการเข้าถึง
-url = 'https://www.facebook.com/'
-
-# Open the web page
-driver.get(url)
-
+#function open massage
 def open_chat_meessage():
     url_open_message = "https://www.facebook.com/messages/e2ee/t/"
     driver.get(url_open_message)
     time.sleep(4)
     print("Opened chat message.")
 
-# Event reaction like post
+#emo love
 def love_post():
     try:
         print("Trying to love a post...")
@@ -46,7 +39,7 @@ def love_post():
         )
         actions = ActionChains(driver)
         actions.move_to_element(like_button).perform()
-        time.sleep(2)  # รอให้ตัวเลือก reaction แสดงขึ้นมา
+        time.sleep(2)  # wait show icon reacton
 
         # รอให้ปุ่ม Love แสดงขึ้นมาและคลิก
         love_button = WebDriverWait(driver, 10).until(
@@ -57,6 +50,7 @@ def love_post():
     except Exception as e:
         print(f"Error loving post: {str(e)}")
 
+#emo care
 def care_post():
     try:
         print("Trying to care a post...")
@@ -77,6 +71,7 @@ def care_post():
     except Exception as e:
         print(f"Error caring post: {str(e)}")
 
+#emo haha
 def haha_post():
     try:
         print("Trying to haha a post...")
@@ -97,6 +92,7 @@ def haha_post():
     except Exception as e:
         print(f"Error haha post: {str(e)}")
 
+#emo sad
 def sad_post():
     try:
         print("Trying to sad a post...")
@@ -117,6 +113,7 @@ def sad_post():
     except Exception as e:
         print(f"Error sad post: {str(e)}")
 
+#emo angry
 def angry_post():
     try:
         print("Trying to angry a post...")
@@ -137,6 +134,7 @@ def angry_post():
     except Exception as e:
         print(f"Error angry post: {str(e)}")
 
+#emo wow
 def wow_post():
     try:
         print("Trying to wow a post...")
@@ -157,8 +155,7 @@ def wow_post():
     except Exception as e:
         print(f"Error wow post: {str(e)}")
 
-## end function reaction post facebook
-
+#function get API link post facebook API
 def get_random_link():
     # URL ของ Google Apps Script API
     api_link_url = "https://script.google.com/macros/s/AKfycbyxlbV2VimWwSSBtPiAN0MfV9FDju6cwoOuQ3sM7mvzbnbTtTK7wyFdNPwNRJf1qoc4WQ/exec"
@@ -174,7 +171,7 @@ def get_random_link():
         # สร้าง list ของ comment
         links = [item['link'] for item in data['data']]
         
-        print("Fetched random links.")
+        #print("Fetched random links.")
         return links
 
     else:
@@ -183,6 +180,7 @@ def get_random_link():
 
 selected_link = get_random_link()
 
+#API comment 
 def get_random_comment():
     api_url = "https://script.google.com/macros/s/AKfycbyaklVb5CTX0yAopqNK_vgJHsgfnZC3LeqzdqqfPx7u-nfS-gTvbdcd22IwvfeRpJm8/exec"
 
@@ -197,7 +195,7 @@ def get_random_comment():
 
         # Try Test
         selected_comment = comments
-        print("Fetched random comments.")
+        #print("Fetched random comments.")
         return selected_comment
 
     else:
@@ -206,6 +204,7 @@ def get_random_comment():
     
 selected_comment = get_random_comment() 
 
+#function notify check
 def notify():
     print("Check Notifications!")
     #driver.get('https://www.facebook.com/notifications')
@@ -222,7 +221,7 @@ def notify():
     except Exception as e:
         print("No new notifications.")
         return
-        
+#function first post like
 def like_post():
     print("Trying to like a post...")
     driver.get('https://www.facebook.com/')
@@ -237,6 +236,7 @@ def like_post():
     except Exception as e:
         print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
 
+#function comment and reaction emotion the post
 def link_comment():
     post_url = random.choice(selected_link)
     driver.get(post_url)
@@ -301,16 +301,19 @@ def link_comment():
         return
     
     print("Comment it Work!")
-    # Add your comment functionality here
 
+#read_story
 def read_story():
     print("Reading Story!!")
     # Add your read story functionality here
 
+#function event random
 def event_random():
+    print("Event Random")
+
     list_event = ["story", "like_post", "like_comment", "notify", "open_chat", "time_line"]
+
     random_event = random.choice(list_event)
-    print("Event Next ==>", random_event)
 
     if random_event == "story":
         read_story()
@@ -334,17 +337,34 @@ def event_random():
         for _ in range(int(scroll_random)):
             driver.execute_script("window.scrollBy(0, 180);")
             time.sleep(15)
+    
+    print("---------------3 sec-----------------")
+    time.sleep(20)
 
+#scroll post facebook
 def timeline_scroll():
     scroll_random = random.uniform(4, 6)
     print("Timeline Scroll Monitor!!")
     for _ in range(int(scroll_random)):
         driver.execute_script("window.scrollBy(0, 180);")
-        time.sleep(2)
+        time.sleep(15)
 
-def login_succ(target_b_id):
-    # List of cookies you provided
-    
+#Sleep Break Bot automation
+def break_time():
+    start_time = 252 # 7hours = 25200sec
+    end_time = 306 # 8 half hours = 30600sec
+    break_duration = random.randint(start_time, end_time)
+    print(f"Time break is {break_duration} sec")
+    print("--------------------------------")
+    driver.quit()
+    time.sleep(break_duration)
+
+#main controll
+def main(target_b_id):
+    print("Start Bot Runing!!!")
+    url = 'https://www.facebook.com/'
+    driver.get(url)
+
     bot_url = 'https://script.google.com/macros/s/AKfycbxYQWVejdmhc3P99N0-qSgHDfcLX3PI1sQFJd2txN-eV0rKg0NqzF7tPBYjk1sGeAOz/exec'
 
     response = requests.get(bot_url)
@@ -376,7 +396,7 @@ def login_succ(target_b_id):
     else:
         print("Error call back API:", response.status_code)
         exit()
-
+    
     cookies_list = [
         {
             'name': 'c_user',
@@ -424,30 +444,42 @@ def login_succ(target_b_id):
         }
     ]
 
-    # Add cookies to the browser
     for cookie in cookies_list:
-        # Convert expires to int if it is not None
         if cookie['expires']:
             cookie['expires'] = int(cookie['expires'])
         driver.add_cookie(cookie)
-
-    # Refresh the web page to use cookies
+    
     driver.refresh()
 
-    # Wait for the web page to load completely
     time.sleep(5)
 
-    # Check login status
     if "Facebook" in driver.title:
         print("เข้าสู่ระบบสำเร็จ")
         while True:
-            event_random()
-            timeline_scroll()
-            time.sleep(5)
+            #timeline_scroll()
+            #time.sleep(3)
+            #event_random()
+            #time.sleep(5)
+            print("Loop run bot automation!")
+            start_time = time.time()
+            two_hour_time = 72 #2hours = 7200sec
+            hthere_hour_time = 126 #3.5 hours = 12600sec
+            
+            time_work = random.randint(two_hour_time, hthere_hour_time)
+            print(f"Time to Work! {time_work} sec.")
+
+            while time.time() - start_time < time_work:
+                timeline_scroll()
+                time.sleep(3)
+                event_random()
+                time.sleep(5)
+            
+            break_time()
     else:
         print("การเข้าสู่ระบบล้มเหลว")
 
     # ปิดเบราว์เซอร์
     driver.quit()
 
-login_succ(target_b_id)
+if __name__ == "__main__":
+    main(target_b_id)
