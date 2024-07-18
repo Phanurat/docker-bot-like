@@ -2,6 +2,9 @@ import datetime
 import time
 import random
 
+global test_day
+test_day = "พฤหัสบดี"
+
 def break_time(check_days):
     start_time = 10  # 7 hours = 25200 sec
     end_time = 15    # 8.5 hours = 30600 sec
@@ -14,10 +17,10 @@ def break_time(check_days):
         today = datetime.datetime.now()
         day_of_week = today.weekday()
         days = ["จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์", "อาทิตย์"]
-        test_day = "อังคาร"
+        #test_day = "อังคาร"
         #print(f"วันนี้เป็นวัน {days[day_of_week]}")
-        if check_days == days[day_of_week]:
-        #if test_day == days[day_of_week]:
+        #if check_days == days[day_of_week]:
+        if test_day == days[day_of_week]:
             print("Breaking!!")
             time.sleep(1)
         else:
@@ -54,7 +57,7 @@ def main():
             while time.time() - start_time < time_work:
                 print(f"Process Working!!")
                 time.sleep(1)  # Simulating work process
-
+                
             check_days = break_time(check_days)  # Check and handle break time
 
             # Check if it's a new day again after the break
