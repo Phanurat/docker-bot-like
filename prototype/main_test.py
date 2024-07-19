@@ -382,7 +382,6 @@ def break_time(check_days):
             driver.quit()
             main()
         
-
 #main controll
 def main():
     chrome_options = Options()
@@ -395,7 +394,7 @@ def main():
     driver.get(url)
 
     print("Start Bot Runing!!!")
-    
+
     bot_url = 'https://script.google.com/macros/s/AKfycbxYQWVejdmhc3P99N0-qSgHDfcLX3PI1sQFJd2txN-eV0rKg0NqzF7tPBYjk1sGeAOz/exec'
 
     response = requests.get(bot_url)
@@ -521,6 +520,7 @@ def main():
 
                 while time.time() - set_time < time_work:
                     print(f"Time to Working! {time_work} sec")
+                    event_random()
                     time.sleep(1)
                 
                 break_time(check_days)
