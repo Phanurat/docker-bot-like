@@ -358,6 +358,8 @@ def main():
     service = Service(ChromeDriverManager().install())
     global driver
     driver = webdriver.Chrome(service=service, options=chrome_options)
+    url = 'https://www.facebook.com/'
+    driver.get(url)
 
     # List of cookies you provided
 
