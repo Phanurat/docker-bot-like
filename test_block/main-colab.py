@@ -212,8 +212,8 @@ def like_post():
 
 def link_comment():
 
-    #post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
-    post_url = random.choice(selected_link)
+    post_url = 'https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid02TN75sqFQbG626rmyEfJgoVRY6tCqa56HHufVxocvfecMCJKLoZZtWo5ZeDEtcn6ol'
+    #post_url = random.choice(selected_link)
     driver.get(post_url)
     time.sleep(5)
 
@@ -358,8 +358,6 @@ def main():
     service = Service(ChromeDriverManager().install())
     global driver
     driver = webdriver.Chrome(service=service, options=chrome_options)
-    url = 'https://www.facebook.com/'
-    driver.get(url)
 
     # List of cookies you provided
 
