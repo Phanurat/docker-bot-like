@@ -22,7 +22,7 @@ chrome_options.add_argument("--disable-notifications")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 # b_id bot
-target_b_id = 'b00007'
+target_b_id = 'b00008'
 
 # URL ของหน้า Facebook ที่ต้องการเข้าถึง
 url = 'https://www.facebook.com/'
@@ -310,8 +310,9 @@ def read_story():
     # Add your read story functionality here
 
 def event_random():
-    list_event = ["story", "like_post", "like_comment", "notify", "open_chat", "time_line"]
+    #list_event = ["story", "like_post", "like_comment", "notify", "open_chat", "time_line"]
     #list_event = ["notify", "notify", "notify", "notify", "notify", "notify"]
+    list_event = ["like_comment","like_comment","like_comment","like_comment"]
     random_event = random.choice(list_event)
     print("Event Next ==>", random_event)
 
