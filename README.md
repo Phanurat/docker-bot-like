@@ -36,6 +36,61 @@ cd dokcer-bot-like
  sudo mv chromedriver /usr/local/bin/
 ```
 
+## FireFox Browser use on Colab
+
+```sh
+    !apt-get update
+    !apt-get install firefox
+    !apt-get install -y xvfb
+    !pip install pyvirtualdisplay selenium
+    !wget https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux64.tar.gz
+```
+### Extract and move root path
+```sh
+    !tar -xvzf geckodriver-v0.32.0-linux64.tar.gz
+    !rm geckodriver-v0.32.0-linux64.tar.gz
+```
+### Use Firefox python.ipynb
+```sh
+#Test use firefox
+from pyvirtualdisplay import Display
+display = Display(visible=0, size=(1400, 900))
+display.start()
+
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+
+options = Options()
+options.add_argument('--headless')
+
+driver = webdriver.Firefox(options=options)
+```
+### Import code and show title to link driver to
+```sh
+from pyvirtualdisplay import Display
+display = Display(visible=0, size=(1400, 900))
+display.start()
+
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.firefox import GeckoDriverManager
+options = Options()
+options.add_argument('--headless')
+
+driver = webdriver.Firefox(options=options)
+
+driver.get("https://www.google.com")
+
+print(driver.title)
+
+driver.quit()
+```
+
 ## Google Colab
 ```sh
 !pip install selenium
