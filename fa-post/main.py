@@ -10,7 +10,7 @@ from datetime import datetime
 import time
 
 # กำหนด b_id ที่ต้องการค้นหา        
-target_b_id = 'b00007'
+target_b_id = 'b00009'
 url = 'https://script.google.com/macros/s/AKfycbxYQWVejdmhc3P99N0-qSgHDfcLX3PI1sQFJd2txN-eV0rKg0NqzF7tPBYjk1sGeAOz/exec'
 
 # ส่ง GET request เพื่อดึงข้อมูล
@@ -61,7 +61,7 @@ chrome_options.add_argument("--disable-notifications")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 # URL of the Facebook profile page you want to access
-url = 'https://www.facebook.com'
+url = 'https://www.facebook.com/phanurat.jakkranukoolkit'
 
 # Open the web page
 driver.get(url)
