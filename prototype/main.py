@@ -20,7 +20,7 @@ chrome_options.add_argument("--disable-notifications")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
 #Input ID bot from API google sheet
-target_b_id = 'b00008'
+target_b_id = 'b00009'
 
 #function open massage
 def open_chat_meessage():

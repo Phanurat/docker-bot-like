@@ -39,7 +39,7 @@ def login_succ():
         },
         {
             'name': 'xs',
-            'value': '28%3AvxWS-P6HoYsIsQ%3A2%3A1719890496%3A-1%3A-1',
+            'value': '32%3A0yrKTOgO9kJYlg%3A2%3A1721903396%3A-1%3A-1%3A%3AAcXAuYq5Gn5F2J_9F3e4sdlX0Yl5bJvR2v9D5XAPwg',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-05-29T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -50,7 +50,7 @@ def login_succ():
         },
         {
             'name': 'datr',
-            'value': 'L3KDZhBP2TiorgX_frlkQbvx',
+            'value': '__GMZCgwVF5BbyvAtfJojQwg',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2025-06-28T01:12:26.667Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
@@ -61,7 +61,7 @@ def login_succ():
         },
         {
             'name': 'fr',
-            'value': '0TprfQir7mFxJRsv4.AWUzaEZ3Cj_mcixj-hKBc_gGinM.Bmg3I2..AAA.0.0.Bmg3I_.AWUID-x-DwU',
+            'value': '0g1z5WVJrxHB2ZD4o.AWXmVEzIqSDevjn-siDLLGfT_BU.Bmoikj..AAA.0.0.Bmoikj.AWUBAm4BRw0',
             'domain': '.facebook.com',
             'path': '/',
             'expires': datetime.strptime('2024-08-27T06:53:31.187Z', '%Y-%m-%dT%H:%M:%S.%fZ').timestamp(),
