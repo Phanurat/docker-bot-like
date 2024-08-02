@@ -11,7 +11,7 @@ import requests
 target_b_id = 'b00009'
 
 def break_automate():
-    time_random = random.randint(30, 60)
+    time_random = random.randint(12600, 19800)
     print(f"Break time: {time_random} seconds")
     time.sleep(time_random)
     main()
@@ -27,7 +27,7 @@ def get_driver():
     return driver
 
 def timeline_scroll(driver):
-    scroll_random = random.uniform(4, 6)
+    scroll_random = random.uniform(4, 20)
     print("Timeline Scroll Monitor!!")
     for _ in range(int(scroll_random)):
         driver.execute_script("window.scrollBy(0, 180);")
@@ -134,14 +134,15 @@ def main():
     try:
         while True:
             start_time = time.time()
-            two_hour_time = 72  # 2 hours in seconds
-            three_hour_time = 120  # 3.5 hours in seconds
+            two_hour_time = 5100  # 2 hours in seconds
+            three_hour_time = 12600  # 3.5 hours in seconds
             work_time = random.randint(two_hour_time, three_hour_time)
             print(f"Automation time: {work_time} seconds")
 
             while time.time() - start_time < work_time:
                 timeline_scroll(driver)
-                time.sleep(3)
+                watch_rd = random.randint(2, 7)
+                time.sleep(watch_rd)
 
             driver.quit()
             break_automate()
