@@ -21,7 +21,7 @@ def get_driver():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     return driver
 
-def login_to_google():
+def login_to_google(email, password):
     driver = get_driver()
     driver.get('https://colab.research.google.com/drive/1RMATUumSYdvqzE_tzlgEM_x6gE76U9Od?usp=sharing')
     
@@ -39,17 +39,52 @@ def login_to_google():
         actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
         
         print("Entered keys: ENTER + CONTROL")
-        time.sleep(30)
+        time.sleep(5)
 
         actions.send_keys(Keys.ENTER).perform()
         
         print("Entered keys: ENTER")
-        time.sleep(30)
+        time.sleep(10)
+
+        wait = WebDriverWait(driver, 20)
+        email_field = wait.until(EC.presence_of_element_located((By.ID, 'identifierId')))
+        email_field.send_keys(email)
+        email_field.send_keys(Keys.RETURN)
+
+        wait.until(EC.presence_of_element_located((By.NAME, 'Passwd')))
+        password_field = driver.find_element(By.NAME, 'Passwd')
+        password_field.send_keys(password)
+        password_field.send_keys(Keys.RETURN)
+        print("Login successful")
+        time.sleep(20)
+        # Send ENTER key
+        actions.send_keys(Keys.ENTER).perform()
         
+        # Send CONTROL key
+        actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
+        
+        print("Entered keys: ENTER + CONTROL")
+        time.sleep(5)
+
+        actions.send_keys(Keys.TAB).perform()
+        time.sleep(5)
+        actions.send_keys(Keys.TAB).perform()
+        time.sleep(5)
+        # Send ENTER key
+        actions.send_keys(Keys.ENTER).perform()
+        time.sleep(5)
+        # Send CONTROL key
+        actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
+        
+        print("Entered keys: ENTER + CONTROL")
+        time.sleep(5)
+
     except Exception as e:
         print(f"An error occurred: {e}")
     finally:
         driver.quit()
 
 if __name__ == "__main__":
-    login_to_google()
+    email = "6330102@kcs.ac.th"
+    password = "1102300079370"
+    login_to_google(email, password)
