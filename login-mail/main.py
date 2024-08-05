@@ -77,7 +77,9 @@ def login_to_google(email, password):
         actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
         
         print("Entered keys: ENTER + CONTROL")
-        time.sleep(5)
+        time.sleep(20)
+
+        driver.quit()
 
     except Exception as e:
         print(f"An error occurred: {e}")
