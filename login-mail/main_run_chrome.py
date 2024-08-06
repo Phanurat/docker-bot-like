@@ -24,6 +24,7 @@ def get_driver():
 def login_to_google(email, password):
     driver = get_driver()
     driver.get('https://colab.research.google.com/drive/1RMATUumSYdvqzE_tzlgEM_x6gE76U9Od?usp=sharing')
+    time.sleep(10)
     
     # Wait until the page is loaded
     try:
@@ -77,7 +78,7 @@ def login_to_google(email, password):
         actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
         
         print("Entered keys: ENTER + CONTROL")
-        time.sleep(5)
+        time.sleep(25)
 
     except Exception as e:
         print(f"An error occurred: {e}")
