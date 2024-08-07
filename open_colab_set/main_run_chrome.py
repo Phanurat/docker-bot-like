@@ -86,7 +86,7 @@ def login_to_google(email, password):
         actions = ActionChains(driver)
         
         # Send ENTER key
-        actions.send_keys(Keys.ENTER).perform()
+        # actions.send_keys(Keys.ENTER).perform()
         
         # Send CONTROL key
         actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
