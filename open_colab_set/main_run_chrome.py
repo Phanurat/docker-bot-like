@@ -76,7 +76,7 @@ def get_driver():
 def login_to_google(email, password):
     driver = get_driver()
     driver.get('https://colab.research.google.com/drive/1RsiY9ojDK7ccb5E440fil4RaTz5y1z65?usp=sharing')
-    time.sleep(10)
+    time.sleep(15)
     
     # Wait until the page is loaded
     try:
@@ -92,12 +92,12 @@ def login_to_google(email, password):
         actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
         
         print("Entered keys: ENTER + CONTROL")
-        time.sleep(5)
+        time.sleep(15)
 
         actions.send_keys(Keys.ENTER).perform()
         
         print("Entered keys: ENTER")
-        time.sleep(10)
+        time.sleep(15)
 
         wait = WebDriverWait(driver, 20)
         email_field = wait.until(EC.presence_of_element_located((By.ID, 'identifierId')))
@@ -109,7 +109,7 @@ def login_to_google(email, password):
         password_field.send_keys(password)
         password_field.send_keys(Keys.RETURN)
         print("Login successful")
-        time.sleep(20)
+        time.sleep(25)
         # Send ENTER key
         actions.send_keys(Keys.ENTER).perform()
         
@@ -117,20 +117,20 @@ def login_to_google(email, password):
         actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
         
         print("Entered keys: ENTER + CONTROL")
-        time.sleep(5)
+        time.sleep(10)
 
         actions.send_keys(Keys.TAB).perform()
-        time.sleep(5)
+        time.sleep(10)
         actions.send_keys(Keys.TAB).perform()
-        time.sleep(5)
+        time.sleep(10)
         # Send ENTER key
         actions.send_keys(Keys.ENTER).perform()
-        time.sleep(5)
+        time.sleep(10)
         # Send CONTROL key
         actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
         
         print("Entered keys: ENTER + CONTROL")
-        time.sleep(25)
+        time.sleep(30)
         driver.quit()
 
     except Exception as e:
