@@ -12,6 +12,8 @@ from datetime import datetime
 import time
 import random
 import requests
+import pytz
+
 
 # Options for ChromeDriver
 chrome_options = Options()
@@ -241,28 +243,29 @@ def like_post():
         print(f"เกิดข้อผิดพลาดในการกดไลค์โพสต์: {str(e)}")
 
 def link_comment():
-    post_url = random.choice(selected_link)
+    #post_url = random.choice(selected_link)
+    post_url = "https://www.facebook.com/phanurat.jakkranukoolkit/posts/pfbid0ADLEGEyKoe3PrcaFUzmRJu2U6hxuvfN28ZH51XFPhDcsbRT8RiLhm9rv4wgH3p7sl"
     driver.get(post_url)
     time.sleep(5)
 
-    reaction_random = ["like", "love", "care", "haha", "wow", "sad", "angry", "not_reaction"]
+    #reaction_random = ["like", "love", "care", "haha", "wow", "sad", "angry", "not_reaction"]
 
-    selected_reaction = random.choice(reaction_random)
+    #selected_reaction = random.choice(reaction_random)
 
-    if selected_reaction == "like":
-        like_post()
-    elif selected_reaction == "love":
-        love_post()
-    elif selected_reaction == "care":
-        care_post()
-    elif selected_reaction == "haha":
-        haha_post()
-    elif selected_reaction == "wow":
-        wow_post()
-    elif selected_reaction == "sad":
-        sad_post()
-    elif selected_reaction == "angry":
-        angry_post()
+    # if selected_reaction == "like":
+    #     like_post()
+    # elif selected_reaction == "love":
+    #     love_post()
+    # elif selected_reaction == "care":
+    #     care_post()
+    # elif selected_reaction == "haha":
+    #     haha_post()
+    # elif selected_reaction == "wow":
+    #     wow_post()
+    # elif selected_reaction == "sad":
+    #     sad_post()
+    # elif selected_reaction == "angry":
+    #     angry_post()
 
     time.sleep(5)
 
@@ -290,8 +293,11 @@ def link_comment():
         time.sleep(2)
         
         # Random comment list
-        comment_text = random.choice(selected_comment)
-
+        # comment_text = random.choice(selected_comment)
+        tz = pytz.timezone('Asia/Bangkok')
+        now = datetime.now(tz)
+        text = "Hello Time at: " + str(now.hour) + ":" + str(now.minute)
+        comment_text = text
         for char in comment_text:
             comment_input.send_keys(char)
             time.sleep(0.5)
