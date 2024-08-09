@@ -213,5 +213,5 @@ if __name__ == "__main__":
             print(f"{now.hour}:{now.minute}")
             login_to_google(email, password)
             time.sleep(5400)
-        time.sleep(600)  # หยุดโปรแกรมเป็นเวลา 10 วินาทีเพื่อประหยัดพลังงาน
+        #time.sleep(600)  # หยุดโปรแกรมเป็นเวลา 10 วินาทีเพื่อประหยัดพลังงาน
         
